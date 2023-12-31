@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 
 function Header() {
-    
+
+    // I gotta change this for statics categories. 
     const navRoutes = 
     [
         {name: 'Products', path: "/products"}
