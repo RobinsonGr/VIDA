@@ -1,20 +1,31 @@
 import { Link } from "react-router-dom";
+import {useEffect, useState} from 'react';
+import {getCategories} from '../api'
 
 function Header() {
+    const [categories, setCategories] = useState([])
 
-    // I gotta change this for statics categories. 
-    const navRoutes = 
-    [
-        {name: 'Products', path: "/products"}
-    ];
+    //retrieve the current categories from the Db, using the api function getCategories
+    useEffect(() => {
+        const fetchData = async() => {
+            const categories = await getCategories()
+            setCategories(categories);
+        }
+
+        fetchData()
+    }, []);
     
     return(
         <div>
             <ul>
+            
                {
-                navRoutes.map(route => (
+                categories.map(route => (
                     <li key={route.name}>
-                        <Link to={route.path}>{route.name}</Link>
+                        {/*Using regex to convert string with spaces into string with hypes to 
+                        match the url pattern
+                        */}
+                        <Link to={`/${route.name.replace(/\s+/g, '-').toLowerCase()}`}>{route.name}</Link>
                     </li>
                 ))
                } 
@@ -24,4 +35,4 @@ function Header() {
     )
 };
 
-export default Header
+export default Header;
