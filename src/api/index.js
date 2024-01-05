@@ -11,4 +11,10 @@ function getProducts() {
         })
 };
 
-export {getProducts};
+function getCategories() {
+    return fetch(`${URL}/categories`)
+        .then((response) => response.json())
+        .then((data) => data)
+};
+
+export {getProducts, getCategories};
