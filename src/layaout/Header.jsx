@@ -12,6 +12,7 @@ function Header() {
             setCategories(categories);
         }
 
+        //fetching data
         fetchData()
     }, []);
     
