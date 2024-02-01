@@ -1,4 +1,7 @@
+import React from 'react';
 
-//testing
-//testing//testing
-//testing//testing//testing
+const Button = ({ label, onClick }) => (
+  <button onClick={onClick}>{label}</button>
+);
+
+export default Button;
