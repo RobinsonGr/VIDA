@@ -1,1 +1,26 @@
-test backup
+const { Client } = require('pg');
+
+async function getConnectionInfo() {
+    const client = new Client({
+        connectionString: 'postgresql://username:password@localhost:5432/database_name'
+    });
+
+    try {
+        await client.connect();
+
+        const { rows } = await client.query('SELECT current_database(), current_user, inet_server_addr(), inet_server_port();');
+        const { current_database, current_user, inet_server_addr, inet_server_port } = rows[0];
+
+        console.log("Connection Information:");
+        console.log("Database Name:", current_database);
+        console.log("User:", current_user);
+        console.log("Host:", inet_server_addr);
+        console.log("Port:", inet_server_port);
+    } catch (error) {
+        console.error("Error retrieving connection information:", error);
+    } finally {
+        await client.end();
+    }
+}
+
+getConnectionInfo();
