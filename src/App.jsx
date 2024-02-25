@@ -1,5 +1,5 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import Products from './pages/products';
+import Products from './pages/Products';
 import ErrorPage from './pages/ErrorPage';
 import Layout from './layaout/Layout';
 
@@ -23,7 +23,7 @@ Log up
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout/>}>
-          <Route path='/products' element={<Products/>}/>
+          <Route path='/category/:category' element={<Products/>}/>
         </Route>
         <Route path="*" element={<ErrorPage/>}/>
       </Routes>
