@@ -23,7 +23,6 @@ function Products() {
         
     }, [category]) 
 
-    console.log(products)
     
     return (
         <>
