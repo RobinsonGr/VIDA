@@ -2,6 +2,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Products from './pages/Products';
 import ErrorPage from './pages/ErrorPage';
 import Layout from './layaout/Layout';
+import { ThemeProvider } from '@emotion/react';
 
 function App() {
 
