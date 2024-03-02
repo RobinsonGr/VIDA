@@ -3,6 +3,7 @@ import Products from './pages/Products';
 import ErrorPage from './pages/ErrorPage';
 import Layout from './layaout/Layout';
 import { ThemeProvider } from '@emotion/react';
+import theme from './theme';
 
 function App() {
 
@@ -21,14 +22,16 @@ Log up
 
  */
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout/>}>
-          <Route path='/category/:category' element={<Products/>}/>
-        </Route>
-        <Route path="*" element={<ErrorPage/>}/>
-      </Routes>
-    </BrowserRouter>
+   <ThemeProvider theme={theme}> 
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout/>}>
+            <Route path='/category/:category' element={<Products/>}/>
+          </Route>
+          <Route path="*" element={<ErrorPage/>}/>
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>  
   );
 };
 

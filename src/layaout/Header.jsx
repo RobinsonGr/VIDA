@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import {useEffect, useState} from 'react';
 import {getCategories} from '../api'
-import { AppBar, Toolbar, IconButton, Menu, MenuItem } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Menu, MenuItem, useTheme } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 
 
@@ -20,6 +20,7 @@ function Header() {
         setAnchorEl(null)
     }
 
+    const theme = useTheme()
 
     //Retrieve the current categories from the Db, using the api function getCategories
     useEffect(() => {
@@ -33,14 +34,15 @@ function Header() {
     return(
         <AppBar position="static"> 
             <Toolbar>  {/*Toolbar groups elements within the navegation bar*/ }
-                <IconButton onClick={handleOpenMenu}>
-                    <MenuIcon/>
+                <IconButton onClick={handleOpenMenu} color={theme.palette.accent.main}>
+                    <MenuIcon />
                 </IconButton>
                 
                 <Menu
                     anchorEl={anchorEl}
                     open={isOpen}
                     onClose={handleCloseMenu}
+     
                 > 
                     {
                     categories.map(route => (
