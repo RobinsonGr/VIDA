@@ -1,6 +1,7 @@
-got to delete this after to request the origin
+got to delete this after requesting the origin to dont have problems later
 
 import { createSlice, current } from "@reduxjs/toolkit";
+
 
 const cartSlice = createSlice({
     name: 'cartSlice',
