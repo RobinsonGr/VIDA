@@ -4,6 +4,7 @@ import ErrorPage from './pages/ErrorPage';
 import Layout from './layaout/Layout';
 import { ThemeProvider } from '@emotion/react';
 import theme from './theme';
+import RegistrationForm from './auth/Registration';
 
 function App() {
 
@@ -27,6 +28,7 @@ Log up
         <Routes>
           <Route path="/" element={<Layout/>}>
             <Route path='/category/:category' element={<Products/>}/>
+            <Route path='/singup' element={<RegistrationForm/>}/>
           </Route>
           <Route path="*" element={<ErrorPage/>}/>
         </Routes>
