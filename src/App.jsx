@@ -28,7 +28,7 @@ Log up
         <Routes>
           <Route path="/" element={<Layout/>}>
             <Route path='/category/:category' element={<Products/>}/>
-            <Route path='/singup' element={<RegistrationForm/>}/>
+            <Route path='/signup' element={<RegistrationForm/>}/>
           </Route>
           <Route path="*" element={<ErrorPage/>}/>
         </Routes>

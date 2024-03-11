@@ -1,19 +1,14 @@
 import { Link } from "react-router-dom";
 import {useEffect, useState} from 'react';
-import {getCategories} from '../api'
-<<<<<<< HEAD
-=======
+import {getAuthValidation, getCategories} from '../api'
 import { AppBar, Toolbar, IconButton, Menu, MenuItem, useTheme } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 
->>>>>>> test2
 
 function Header() {
     const [categories, setCategories] = useState([])
 
-<<<<<<< HEAD
     //retrieve the current categories from the Db, using the api function getCategories
-=======
 
     const [anchorEl, setAnchorEl] = useState(null); //This state is to control the opening and closing of the slide-out nav, 
     const isOpen = Boolean(anchorEl); //This goes into the property open, works as a switch
@@ -29,40 +24,13 @@ function Header() {
     const theme = useTheme()
 
     //Retrieve the current categories from the Db, using the api function getCategories
->>>>>>> test2
     useEffect(() => {
         const fetchData = async() => {
             const categories = await getCategories()
+            console.log(await getAuthValidation())
             setCategories(categories);
         }
-<<<<<<< HEAD
 
-        //fetching data
-        fetchData()
-    }, []);
-    
-    return(
-        <div>
-            <ul>
-            
-               {
-                categories.map(route => (
-                    <li key={route.name}>
-                        {/*Using regex to convert string with spaces into string with hypes to 
-                        match the url pattern
-                        */}
-                        <Link to={`/${route.name.replace(/\s+/g, '-').toLowerCase()}`}>{route.name}</Link>
-                    </li>
-                ))
-               } 
-            </ul>
-        </div>
-
-    )
-};
-
-export default Header;
-=======
         fetchData() //fetching data
     }, []);
     
@@ -94,5 +62,4 @@ export default Header;
     );
 };
 
-export default Header;
->>>>>>> test2
+export default Header
