@@ -26,18 +26,22 @@ const initialValues = {
             formData.append(valueKey, values[valueKey]);
         }
 
-        await registerUser(formData)
-        
-        //object with iterable protocol
-        for (var pair of formData.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]); 
+        try{
+            await registerUser(formData)
+        } catch(error) {
+            console.error('Error', error)
+
         }
+        
+        //object with iterable protocol to show in the console
+        // for (var pair of formData.entries()) {
+        //     console.log(pair[0]+ ', ' + pair[1]); 
+        // }
 
         //formikbag.resetForm(), formikbag contains isSubmitting as well, 
         resetForm();
         
     }
-
 
 return(
     <Formik
@@ -51,7 +55,7 @@ return(
         <ErrorMessage name="name"  component="div"/>
         <Field type="text" name="address"/>
         <ErrorMessage  name="address"  component="div"/>
-        <Field type="text" name="email"/>
+        <Field type="email" name="email"/>
         <ErrorMessage name="email" component="div"/>
         <Field type="password" name="password"/>
         <ErrorMessage name="password"  component="div"/>

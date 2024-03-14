@@ -5,6 +5,7 @@ import Layout from './layaout/Layout';
 import { ThemeProvider } from '@emotion/react';
 import theme from './theme';
 import RegistrationForm from './auth/Registration';
+import LoginForm from './auth/Login';
 
 function App() {
 
@@ -29,6 +30,7 @@ Log up
           <Route path="/" element={<Layout/>}>
             <Route path='/category/:category' element={<Products/>}/>
             <Route path='/signup' element={<RegistrationForm/>}/>
+            <Route path='/login' element={<LoginForm/>}></Route>
           </Route>
           <Route path="*" element={<ErrorPage/>}/>
         </Routes>
