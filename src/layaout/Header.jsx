@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import {useEffect, useState} from 'react';
 import {getAuthValidation, getCategories} from '../api'
-import { AppBar, Toolbar, IconButton, Menu, MenuItem, useTheme } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Menu, MenuItem, useTheme, Button } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-
+import CartButton from "../components/cart/cartButton";
 
 function Header() {
     const [categories, setCategories] = useState([])
-
+  
     //retrieve the current categories from the Db, using the api function getCategories
 
     const [anchorEl, setAnchorEl] = useState(null); //This state is to control the opening and closing of the slide-out nav, 
@@ -19,7 +19,7 @@ function Header() {
 
     const handleCloseMenu = () => {
         setAnchorEl(null)
-    }
+    };
 
     const theme = useTheme()
 
@@ -30,7 +30,6 @@ function Header() {
             console.log(await getAuthValidation())
             setCategories(categories);
         }
-
         fetchData() //fetching data
     }, []);
     
@@ -45,7 +44,6 @@ function Header() {
                     anchorEl={anchorEl}
                     open={isOpen}
                     onClose={handleCloseMenu}
-     
                 > 
                     {
                     categories.map(route => (
@@ -56,7 +54,15 @@ function Header() {
                         </MenuItem>
                     ))
                     } 
-                </Menu>           
+                </Menu>
+                <Link to="/login"> 
+                    <Button variant="contained">Sing in</Button>  
+                </Link>
+
+                <Link to="/signup">
+                    <Button variant="contained">Sign up</Button>           
+                </Link>    
+                    <CartButton/>
             </Toolbar>
         </AppBar>
     );
