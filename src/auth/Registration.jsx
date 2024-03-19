@@ -69,3 +69,5 @@ return(
 }
 
 export default RegistrationForm;
+
+
