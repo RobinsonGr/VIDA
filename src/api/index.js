@@ -64,4 +64,21 @@ function submitLoginAPI(userData) {
       .then(response => response);      
 };
 
-export {getProducts, getCategories, getAuthValidation, registerUser, submitLoginAPI};
+function editUserAPI(dataUpdated) {
+    
+    return fetch(`${URL}/user/edituser`, {
+        method: 'PUT',
+        body: JSON.stringify(dataUpdated)
+    })
+    .then(responseRaw => responseRaw.json())
+    .then(response => response)
+};
+
+export {
+    getProducts, 
+    getCategories, 
+    getAuthValidation, 
+    registerUser, 
+    submitLoginAPI,
+    editUserAPI
+};

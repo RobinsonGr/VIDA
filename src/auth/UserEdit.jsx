@@ -1,7 +1,8 @@
-import TextField from '@mui/material/TextField';
+import {TextField, Button} from '@mui/material';
 import { Field, useFormik} from "formik";
 import { useSelector } from "react-redux";
 import {object, string} from 'yup';
+import { editUserAPI } from '../api';
 
 
 const validationSchema = object({
@@ -12,19 +13,29 @@ const validationSchema = object({
 
 function UserEdit () {
     
-    const {name, address} = useSelector(state => state.auth)
+    const {name, address, email} = useSelector(state => state.auth)
 
     const initialValues = {
         name: name || '',
-        address: address || ''
+        address: address || '',
+        email: email || '',
+        password: '*********'
     };
+
+    const handleSubmit = async ({name, address}, {resetForm}) => {
+
+        try {
+            await editUserAPI({name, address})
+        } catch(err) {
+            console.error(err)
+        }
+        resetForm()
+    }
 
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: validationSchema,
-        onSubmit: (values) => {
-            console.log(values)
-        }
+        onSubmit: handleSubmit
     })
 
 return (
@@ -33,7 +44,6 @@ return (
             name="name"
             label="Name"
             variant="outlined"
-            fullWidth
             value={formik.values.name}
             onChange={formik.handleChange} 
             error={formik.touched.name && Boolean(formik.errors.name)} 
@@ -44,14 +54,36 @@ return (
             name="address"
             label="Address"
             variant="outlined"
-            fullWidth
             value={formik.values.address}
             onChange={formik.handleChange} 
             error={formik.touched.address && Boolean(formik.errors.address)} 
             helperText={formik.touched.address && formik.errors.address} 
        />
 
-       {/* ... rest of your form components */}
+       <TextField
+            name="email"
+            label="E-mail"
+            disabled={true}
+            variant="outlined"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            error={formik.touched.email && !!(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
+       />
+
+<       TextField
+            name="password"
+            disabled={true}
+            label="Password"
+            variant="outlined"
+            type="password" // Set input type to password
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
+        />
+        <Button variant="contained" type="Submit">Save changes</Button>
+
     </form>
   );}
 
