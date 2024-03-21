@@ -16,9 +16,6 @@ function Item({itemData}) {
             quantity: 1
         }))
     }
-
-
-
     return (
         <>
         <h1>{name}</h1>

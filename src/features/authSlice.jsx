@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAuthValidation } from "../api";
+import { getAuthValidation } from "../api/index";
 
 const fetchUserAuth = createAsyncThunk('fetchUserAuth', async (_, thunkAPI) => {
     return await getAuthValidation()

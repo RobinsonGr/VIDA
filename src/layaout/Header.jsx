@@ -4,9 +4,12 @@ import {getAuthValidation, getCategories} from '../api'
 import { AppBar, Toolbar, IconButton, Menu, MenuItem, useTheme, Button } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import CartButton from "../components/cart/cartButton";
+import { useSelector } from "react-redux";
+
 
 function Header() {
     const [categories, setCategories] = useState([])
+    const isAuth = useSelector(state => state.auth.isAuth);
   
     //retrieve the current categories from the Db, using the api function getCategories
 
@@ -55,13 +58,18 @@ function Header() {
                     ))
                     } 
                 </Menu>
-                <Link to="/login"> 
-                    <Button variant="contained">Sing in</Button>  
-                </Link>
+               {!isAuth && 
+                 ( <>
+                    <Link to="/login"> 
+                        <Button variant="contained">Sing in</Button>  
+                    </Link>
 
-                <Link to="/signup">
-                    <Button variant="contained">Sign up</Button>           
-                </Link>    
+                    <Link to="/signup">
+                        <Button variant="contained">Sign up</Button>           
+                    </Link>  
+                    </>   
+                )
+               }
                     <CartButton/>
             </Toolbar>
         </AppBar>
