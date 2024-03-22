@@ -1,7 +1,7 @@
 const URL = 'http://localhost:3000'
 
 
-function getCategories () {
+function getCategoriesAPI () {
     return fetch(`${URL}/categories`)
         .then(response => response.json())
         .then(data => data)
@@ -10,6 +10,18 @@ function getCategories () {
 function getProducts(categoryURL) {
     //Retrieveing the product list by category
    return fetch(`${URL}/products/${categoryURL}`)
+
+    //Parsing the response as JSON
+        .then((response) => response.json())
+        //resolving the promise with the retrieved data
+        .then((data) => {
+            return data
+        })
+};
+
+function getProductsbyCategoryId(categoryId) {
+    //Retrieveing the product list by category
+   return fetch(`${URL}/products/bycategoryid/${categoryId}`)
 
     //Parsing the response as JSON
         .then((response) => response.json())
@@ -76,9 +88,10 @@ function editUserAPI(dataUpdated) {
 
 export {
     getProducts, 
-    getCategories, 
+    getCategoriesAPI, 
     getAuthValidation, 
     registerUser, 
     submitLoginAPI,
-    editUserAPI
+    editUserAPI,
+    getProductsbyCategoryId,
 };

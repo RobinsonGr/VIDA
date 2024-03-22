@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import {useEffect, useState} from 'react';
-import {getAuthValidation, getCategories} from '../api'
+import {getAuthValidation, getCategoriesAPI} from '../api'
 import { AppBar, Toolbar, IconButton, Menu, MenuItem, useTheme, Button } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import CartButton from "../components/cart/cartButton";
@@ -29,7 +29,7 @@ function Header() {
     //Retrieve the current categories from the Db, using the api function getCategories
     useEffect(() => {
         const fetchData = async() => {
-            const categories = await getCategories()
+            const categories = await getCategoriesAPI()
             console.log(await getAuthValidation())
             setCategories(categories);
         }
