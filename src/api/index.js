@@ -19,6 +19,21 @@ function getProducts(categoryURL) {
         })
 };
 
+function editedProductAPI(editedProduct) {
+    //Retrieveing the product list by category
+   return fetch(`${URL}/products/${categoryURL}`,
+    {
+    method: 'PUT',
+    body: JSON.stringify(editedProduct)    
+    })
+    //Parsing the response as JSON
+        .then((response) => response.json())
+        //resolving the promise with the retrieved data
+        .then((data) => {
+            return data
+        })
+};
+
 function getProductsbyCategoryId(categoryId) {
     //Retrieveing the product list by category
    return fetch(`${URL}/products/bycategoryid/${categoryId}`)
@@ -94,4 +109,5 @@ export {
     submitLoginAPI,
     editUserAPI,
     getProductsbyCategoryId,
+    editedProductAPI
 };

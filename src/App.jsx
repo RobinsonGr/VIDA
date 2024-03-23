@@ -11,7 +11,7 @@ import UserEdit from './pages/UserEdit';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from "react-router-dom";
 import { fetchUserAuth } from './features/authSlice';
-import AdminProductsPanel from './components/AdminProductsPanel';
+import AdminProductsPanel from './pages/AdminProductsPanel';
 
 function App() {
   const dispatch = useDispatch()
