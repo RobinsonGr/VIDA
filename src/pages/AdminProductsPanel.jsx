@@ -2,32 +2,33 @@ import { Button, FormControl, InputLabel, MenuItem, Select, Typography, Box, Tex
 import React, { useEffect, useState } from 'react';
 import { getCategoriesAPI, getProductsbyCategoryId } from '../api';
 import EditProduct from '../components/EditProduct';
+import AddProduct from '../components/AddProduct';
 
 function AdminProductsPanel () {
 
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState({});
   const [currentProducts, setCurrentProducts] = useState([]);
+  const [editingProductId, setEditingProductId] = useState(null)
+  //Toggle button to change between EditProduct and AddProduct
+  const [toggleProductOption, setToggleProductOption] = useState(false);
 
   useEffect(() => {
     const retrieveCategories = async () => {
       const currentCategories = await getCategoriesAPI()
       setCategories(currentCategories)
          //Setting the first category of the list, the dropdown will have an initial value to show
-     
         setSelectedCategory(currentCategories[0]);
-        console.log({selectedCategory: currentCategories[0].name})
-      
     };
 
     retrieveCategories()
   }, [])
 
+  //Every thie a category is selected, the code wrapped by useEffect will be execute and will retrieve the products
   useEffect(() => {
     const retrieveProducts = async() => {
       const currentProductsByCategory = await getProductsbyCategoryId(selectedCategory.id);
       setCurrentProducts(currentProductsByCategory)
-    //console.log(currentProductsByCategory)
     }
 
     if(selectedCategory) {
@@ -42,9 +43,19 @@ function AdminProductsPanel () {
 
   };
 
+  const handleEditingProduct = (id) => {
+    if (editingProductId === id) {
+      setEditingProductId(null); 
+    } else {
+      setEditingProductId(id);
+    }
+  };
+  
+
 
   return (
     <>
+    {/*Categories dropdown, every tiem a category is selected, handleSelectCategory will retrieve products lists */ }
     <FormControl sx={{marginBottom: 10}}>
       {(selectedCategory && selectedCategory.id) && ( // Only render Select after data categories is fetched
         <>
@@ -61,12 +72,33 @@ function AdminProductsPanel () {
         </>
       )}
     </FormControl>
+{/*Edit product section */}
 
-    <Box >
+{/* Toggle to change between editProduct(true) and AddProduct, but default will appear EditProduct first*/}
+      
+      <Button onClick={() => {setToggleProductOption(false)}}>Edit Product</Button>
+      <Button onClick={() => {setToggleProductOption(true)}}>Add Product</Button>
+      <Box >
+        {
+           toggleProductOption ? (
 
-          {currentProducts.length > 0 && currentProducts.map((product) => (
-          <EditProduct productData={{...product}} />))}
-    </Box>
+          <AddProduct></AddProduct>
+
+           ) : (
+              currentProducts.length > 0 && currentProducts.map((product) => 
+              editingProductId === product.id ? (
+                //EditProduct is a form handled by formik with validaton, if the user hits edit button this will apear
+              <EditProduct key={product.id}  editingProductId={editingProductId} setToggleProductOption={setToggleProductOption} productData={{...product}} />) : ((
+                <div key={product.id}>
+                  <Typography>{product.name}</Typography>
+              <Button onClick={() => handleEditingProduct(product.id)}>Edit</Button>
+              <Button>Delete</Button>
+              </div>))
+              )
+              )
+            } 
+        </Box>
+
     </>
   );
 };

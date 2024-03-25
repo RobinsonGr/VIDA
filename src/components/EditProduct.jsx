@@ -1,95 +1,104 @@
-import { useState } from "react";
-import { useFormik } from "formik"
-import { object, string, number } from "yup"
+import {useState} from "react";
+import { useFormik } from "formik";
+import { object, string, number } from "yup";
 import { editedProductAPI } from "../api";
-import { TextField, Typography, Button } from "@mui/material";
+import { TextField, Button, Typography } from "@mui/material";
 
 const validationSchema = object({
-    name: string().required('A name is required'),
-    price:  number('A price is required'),
-    url: string(),
-    description: string().required('A description is required')
-}); 
+  name: string().required("A name is required"),
+  price: number().required("A price is required"),
+  url: string(),
+  description: string().required("A description is required"),
+  stock:number().required("The stock is required")
+});
 
-function EditProduct ({productData}) {
-    const [editingProductId, setEditingProductId] = useState(null)
-    const {name, id, price, img, description} = productData
-    
-    console.log(productData)
-    const initialValues = {
-        name: name || '',
-        price: price || '',
-        img: img || '',
-        description: description || ''
-    }
+function EditProduct({ productData }) {
+  const { name, id, price, img, description, stock } = productData;
+  const [editedProductState, setEditedProductState] = useState(false);
 
-   
-  const handleEditingProduct = (id) => {
-    if (editingProductId === id) {
-      setEditingProductId(null); // Close the form if the same product is clicked again
-    } else {
-      setEditingProductId(id); // Open the form for the clicked product
-    }
+
+  const initialValues = {
+    name: name || "",
+    price: price || "",
+    img: img || "",
+    description: description || "",
+    stock: stock || ""
   };
 
-    const handleSubmit = async (editedProduct) => {
-        await editedProductAPI(editedProduct)
-        setEditingProductId(null)
-    }
+  const handleSubmit = async (values) => {
+    await editedProductAPI({id, ...values});
+    setEditedProductState(true)
+  };
 
-    const formik = useFormik({
-        initialValues: initialValues,
-        validate: validationSchema,
-        onSubmit: handleSubmit
-    }) 
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: validationSchema,
+    onSubmit: handleSubmit,
+  });
 
-    console.log(name)
-    console.log(editingProductId)
+  return (
+    editedProductState ? (
+      <>
+      <Typography variant="body1">
+       The {name} was edited successfully
+      </Typography>
+      </>) : ( 
+         <form onSubmit={formik.handleSubmit}>
+         <TextField
+           label="Name"
+           name="name"
+           value={formik.values.name}
+           onChange={formik.handleChange}
+           onBlur={formik.handleBlur}
+           error={formik.touched.name && Boolean(formik.errors.name)}
+           helperText={formik.touched.name && formik.errors.name}
+         />
+   
+         <TextField
+           label="Price"
+           name="price"
+           type="number"
+           value={formik.values.price}
+           onChange={formik.handleChange}
+           onBlur={formik.handleBlur}
+           error={formik.touched.price && Boolean(formik.errors.price)}
+           helperText={formik.touched.price && formik.errors.price}
+         />
+   
+         <TextField
+           label="Description"
+           name="description"
+           value={formik.values.description}
+           onChange={formik.handleChange}
+           onBlur={formik.handleBlur}
+           error={formik.touched.description && Boolean(formik.errors.description)}
+           helperText={formik.touched.description && formik.errors.description}
+         />
+   
+   <TextField
+           label="Stock"
+           name="stock"
+           value={formik.values.stock}
+           onChange={formik.handleChange}
+           onBlur={formik.handleBlur}
+           error={formik.touched.stock && Boolean(formik.errors.stock)}
+           helperText={formik.touched.stock && formik.errors.stock}
+         />
+   
+         <TextField
+           label="Image Link"
+           name="img"
+           value={formik.values.img}
+           onChange={formik.handleChange}
+           onBlur={formik.handleBlur}
+         />
+   
+         <Button type="submit" variant="contained" color="primary">
+           Submit
+         </Button>
+       </form>)
+     );
 
-    return (
-            editingProductId === id ? (
-            <form onSubmit={formik.handleSubmit}> 
-            <TextField
-            label="Name"
-            name="name"
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            >
-            </TextField>
-
-            <TextField
-            label="Price"
-            name="price"
-            value={formik.values.price}
-            onChange={formik.handleChange}
-            >
-            </TextField>
-
-            <TextField
-            label="Description"
-            name="Description"
-            value={formik.values.description}
-            onChange={formik.handleChange}
-            >
-            </TextField>
-
-            <TextField
-            label="Image Link"
-            name="img"
-            //There could be products in db with null as img field
-            value={img ? img : ''}
-            >
-            </TextField>
-
-            <button type="submit"> Submit</button>
-            </form>
-            ) : (
-              <div key={id}>
-                <Typography>{name}</Typography>
-                <Button onClick={() => handleEditingProduct(id)}>Edit</Button>
-                <Button>Delete</Button>
-            </div>)
-    )
 }
 
-export default EditProduct
+export default EditProduct;

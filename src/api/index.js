@@ -19,12 +19,36 @@ function getProducts(categoryURL) {
         })
 };
 
+function addProduct(newProduct) {
+    console.log(JSON.stringify(newProduct))
+
+    //Retrieveing the product list by category
+   return fetch(`${URL}/products/`, {
+    method: 'POST',
+    body: JSON.stringify(newProduct),
+    headers: {
+        'Content-Type': 'application/json'
+    }  
+   })
+
+    //Parsing the response as JSON
+        .then((response) => response.json())
+        //resolving the promise with the retrieved data
+        .then((data) => {
+            return data
+        })
+};
+
 function editedProductAPI(editedProduct) {
     //Retrieveing the product list by category
-   return fetch(`${URL}/products/${categoryURL}`,
+   return fetch(`${URL}/products`,
     {
     method: 'PUT',
-    body: JSON.stringify(editedProduct)    
+    body: JSON.stringify(editedProduct),
+    //here wihtout the header, the browser probably was setting other header and this throw error
+    headers: {
+        'Content-Type': 'application/json'
+    }    
     })
     //Parsing the response as JSON
         .then((response) => response.json())
@@ -32,6 +56,7 @@ function editedProductAPI(editedProduct) {
         .then((data) => {
             return data
         })
+        .catch((err) => (console.log(err)))
 };
 
 function getProductsbyCategoryId(categoryId) {
@@ -57,7 +82,7 @@ function registerUser (FormData) {
     })
     .then(response => response.json())
     .then(message => {
-        console.log(message)
+        (message)
         return message
     })
 };
@@ -69,7 +94,7 @@ function getAuthValidation () {
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data)
+      (data)
       return data
     })
 };
@@ -109,5 +134,6 @@ export {
     submitLoginAPI,
     editUserAPI,
     getProductsbyCategoryId,
-    editedProductAPI
+    editedProductAPI,
+    addProduct
 };

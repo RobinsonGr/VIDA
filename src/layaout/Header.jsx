@@ -30,7 +30,7 @@ function Header() {
     useEffect(() => {
         const fetchData = async() => {
             const categories = await getCategoriesAPI()
-            console.log(await getAuthValidation())
+           // (await getAuthValidation())
             setCategories(categories);
         }
         fetchData() //fetching data

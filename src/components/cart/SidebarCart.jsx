@@ -9,7 +9,7 @@ function SidebarCart() {
         <>
         {cartItems.map(item => {
 
-            console.log(item)
+            (item)
             return <CartItem userData={item} key={item.id}/>
         })}
         </>

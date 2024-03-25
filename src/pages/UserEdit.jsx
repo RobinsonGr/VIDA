@@ -30,7 +30,7 @@ function UserEdit () {
             console.error(err)
         }
         resetForm()
-    }
+    };
 
     const formik = useFormik({
         initialValues: initialValues,

@@ -30,12 +30,11 @@ const initialValues = {
             await registerUser(formData)
         } catch(error) {
             console.error('Error', error)
-
         }
         
         //object with iterable protocol to show in the console
         // for (var pair of formData.entries()) {
-        //     console.log(pair[0]+ ', ' + pair[1]); 
+        //     (pair[0]+ ', ' + pair[1]); 
         // }
 
         //formikbag.resetForm(), formikbag contains isSubmitting as well, 

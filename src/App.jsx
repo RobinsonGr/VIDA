@@ -12,10 +12,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from "react-router-dom";
 import { fetchUserAuth } from './features/authSlice';
 import AdminProductsPanel from './pages/AdminProductsPanel';
-
+import Home from './pages/Home';
 function App() {
   const dispatch = useDispatch()
 
+  //Check if the user is auth to allow some features
   useEffect(() => { 
     dispatch(fetchUserAuth())
   }, [])
@@ -25,7 +26,8 @@ function App() {
     <ThemeProvider theme={theme}> 
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Layout/>}>
+            <Route path="/" element={<Home/>}/>
             <Route path='/category/:category' element={<Products />} />
             <Route path='/editproducts' element={<AdminProductsPanel />} /> 
             <Route path='/signup' element={!isAuth ? (
