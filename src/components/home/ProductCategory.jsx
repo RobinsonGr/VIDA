@@ -1,31 +1,54 @@
 // ProductCategory.jsx
 import React, { useState, useEffect } from 'react';
-import { getProductsByCategory } from '../api'; // You'll need to implement this API function
+import { getProductsbyCategoryId } from '../../api';
+import { Box, Typography, Grid, Pagination, useTheme } from '@mui/material';
 
-const ProductCategory = ({ category }) => {
+const ProductCategory = ({categoryData}) => {
+  const {id, name} = categoryData;
+  const theme = useTheme();
   const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1) 
+  const productsPerPage = 6;
 
   useEffect(() => {
     // Fetch products by category when the component mounts
      const retrieveProducts = async () => {
-        const retrievedProducts = await getProductsByCategory()
+        const retrievedProducts = await getProductsbyCategoryId(id)
         setProducts(retrievedProducts)
      }
      retrieveProducts()
-  }, [category]);
+  }, [categoryData]);
+
+  const handlePageChange = (event, newPage) => {
+      setPage(newPage)
+  };
 
   return (
     <div>
-      <h2>{category} Products</h2>
-      <div className="product-list">
-        {products.map((product) => (
-          <div key={product.id}>
-            {product.img ? (<img src={product.img} alt={product.name} />) : null}
-            <p>{product.name}</p>
-            <p>{product.price}</p>
-          </div>
+      <Typography variant="h5">{name} Products</Typography>
+      <Grid container spacing={2}>
+        {products
+          .slice((page - 1) * productsPerPage, page * productsPerPage)
+          .map((product) => (
+            <Grid item xs={6} sm={4} md={3} key={product.id}>
+              <Box border={1} p={2} textAlign="center" bgcolor={theme.palette.neutral.main}>
+                {product.img && (<img src={product.img} alt={product.name} />)}
+                <Typography variant='subtitle1'>{product.name}</Typography>
+                <Typography variant='body1'>{product.price}</Typography>
+              </Box>
+            </Grid>
         ))}
-      </div>
+      </Grid>
+      <Pagination
+        count={Math.ceil(products.length / productsPerPage)}
+        page={page}
+        onChange={handlePageChange}
+        variant='outlined'
+        shape="rounded"
+        color="primary"
+        style={{marginTop: 20}}
+      >
+      </Pagination>
     </div>
   );
 }

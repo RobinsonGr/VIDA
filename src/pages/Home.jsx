@@ -1,16 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import BannerSlider from '../components/home/BannerSlider';
 import ProductCategory from '../components/home/ProductCategory';
+import { getCategoriesAPI } from '../api';
+
+
 
 const Home = () => {
+    const [categoryList, setCategoryList] = useState([])
+
+    useEffect(() => {
+        const retrieveCategories = async () => {
+           const categories = await getCategoriesAPI();
+            setCategoryList(categories)
+        }
+        retrieveCategories()
+    }, [])
+
+    console.log(categoryList)
+
   return (
     <div>
-      <h1>s6666d</h1>
       <BannerSlider />
-      <ProductCategory category="electronics" />
-      {/* Add more sections or components as needed */}
+      {
+        categoryList.length > 0 ? (categoryList.map(({id, name}) => (
+            <ProductCategory categoryData={{id, name}}/>
+        ))) : null
+      }
+
     </div>
-  );
+   );
 };
 
 export default Home;
