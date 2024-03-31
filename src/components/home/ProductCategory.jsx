@@ -19,11 +19,11 @@ const ProductCategory = ({ categoryData }) => {
   }, [id]); // Depend on id directly
 
   const settings = {
-    infinite: true, // Enable infinite loop scrolling
-    speed: 500,  // Slide transition speed (in milliseconds)
-    slidesToShow: 5, // Number of slides to show at once
-    slidesToScroll: 5, // Number of slides to scroll per transition
-    responsive: [  // Responsive settings for different screen sizes
+    infinite: true, 
+    speed: 500,  
+    slidesToShow: 5, 
+    slidesToScroll: 5, 
+    responsive: [  
         {
             breakpoint: 1024,
             settings: {
@@ -32,7 +32,7 @@ const ProductCategory = ({ categoryData }) => {
             }
         },
         {
-            breakpoint: 600,
+            breakpoint: 700,
             settings: {
                 slidesToShow: 3,
                 slidesToScroll: 3,
@@ -41,8 +41,8 @@ const ProductCategory = ({ categoryData }) => {
         {
             breakpoint: 480,
             settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1,
+                slidesToShow: 2,
+                slidesToScroll: 2,
             }
         }
     ]

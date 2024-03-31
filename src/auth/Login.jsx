@@ -1,48 +1,104 @@
-import { object, string } from "yup"
-import { submitLoginAPI } from "../api";
-import { ErrorMessage, Formik, Form, Field } from "formik";
-import { useDispatch} from "react-redux";
-import { fetchUserAuth } from "../features/authSlice";
+import React from 'react';
+import { TextField, Button, Typography, Grid, Box } from '@mui/material';
+import { object, string } from 'yup';
+import { Formik, Form, ErrorMessage } from 'formik';
+import { useDispatch } from 'react-redux';
+import { fetchUserAuth } from '../features/authSlice';
+import { submitLoginAPI } from '../api';
 
 const loginSchema = object({
-    email: string().email().required('Email is required'),
-    password: string().required('the password is require')
+  email: string().email('Invalid email format').required('Email is required'),
+  password: string().required('Password is required'),
 });
 
-
 const initialValues = {
-    email: '',
-    password: ''
-}
-
+  email: '',
+  password: '',
+};
 
 const LoginForm = () => {
-const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
+  const submitLogin = async (values) => {
+    await submitLoginAPI(values);
+    dispatch(fetchUserAuth());
+  };
 
-const submitLogin = async (values) => {
-    await submitLoginAPI(values)
-    dispatch(fetchUserAuth())
-    
-}
+  return (
+    <Grid container alignItems="center" justifyContent="center" style={{ minHeight: '100vh', backgroundImage: 'url(https://i.ibb.co/Q9Q3s15/eco-profile-background.jpg)',
+    backgroundSize: 'cover', }}>
+      <Grid item xs={12} sm={8} md={6}>
+      <Box
+  sx={{
+    width: '350px',
+    margin: '20px auto',
+    padding: '20px',
+    border: '1px solid #ddd',
+    borderRadius: '5px',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)', 
+  }}
+>
+          <Typography variant="h5" sx={{ textAlign: 'center', marginBottom: '20px', color: '#000' }}>
+            Login
+          </Typography>
+          <Formik initialValues={initialValues} validationSchema={loginSchema} onSubmit={submitLogin}>
+            {({ values, handleChange }) => (
+              <Form>
+                <TextField
+                  type="email"
+                  name="email"
+                  label="Email"
+                  variant="outlined"
+                  fullWidth
+                  value={values.email}
+                  onChange={handleChange}
+                  sx={{
+                    mb: 2,
+                    '& .MuiOutlinedInput-root': {
+                      fontSize: '16px',
+                      padding: '10px',
+                    },
+                  }}
+                />
+                <ErrorMessage name="email" component="div" style={{ color: 'red' }} />
 
-return (
-    <Formik
-    initialValues={initialValues}
-    validationSchema={loginSchema}
-    onSubmit={submitLogin}
-    >
-        <Form>
-            <Field type="email" name="email"></Field>
-            <ErrorMessage name="email" component="div"></ErrorMessage>
-            <Field type="text" name="password"></Field>
-            <ErrorMessage name="password" component="div"></ErrorMessage>
-            <button type='submit'>Submit</button>
+                <TextField
+                  type="password"
+                  name="password"
+                  label="Password"
+                  variant="outlined"
+                  fullWidth
+                  value={values.password}
+                  onChange={handleChange}
+                  sx={{
+                    mb: 2,
+                    '& .MuiOutlinedInput-root': {
+                      fontSize: '16px',
+                      padding: '10px',
+                    },
+                  }}
+                />
+                <ErrorMessage name="password" component="div" style={{ color: 'red' }} />
 
-        </Form>
-    </Formik>
-
-)
+                <Button
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                  sx={{
+                    mt: 2,
+                    fontSize: '16px',
+                    padding: '10px 20px',
+                  }}
+                >
+                  Submit
+                </Button>
+              </Form>
+            )}
+          </Formik>
+        </Box>
+      </Grid>
+    </Grid>
+  );
 };
 
 export default LoginForm;

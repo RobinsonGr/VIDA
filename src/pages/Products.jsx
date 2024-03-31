@@ -1,39 +1,35 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import { getProducts } from '../api';
 import Item from '../components/Item';
 import { useParams } from 'react-router-dom';
+import { Grid } from '@mui/material';
 
 function Products() {
+  const [products, setProducts] = useState([]);
+  const { category } = useParams();
 
-    const [products, setProducts] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      const products = await getProducts(category);
+      setProducts(products);
+    }
+    fetchData();
+  }, [category]);
 
+  return (
+    <>
+      <h2 style={{ color: '#4CAF50', marginBottom: '20px' }}>{category} Products</h2> 
 
-    //retrieving the category name from the url param
-    const {category} = useParams()
-    
-    //useEffect can't handle async or anytype of data, just a simple function as first parameter
-    useEffect(() => {
-        //set the async an independent function inside the useEffect callback 
-        async function fetchData () {
-            //getting the products list with a funtion from API folder
-            const products = await getProducts(category)
-            setProducts(products);
-        }
-        fetchData()
-        
-    }, [category]) 
-
-    
-    return (
-        <>
-        {
-            products && 
-            products.map((data) => {
-               return <Item itemData={data}/>
-            })
-        }
-        </>
-    )
-};
+      <Grid container spacing={3}>
+        {products &&
+          products.map((data) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={data.id}> 
+               <Item itemData={data} />
+            </Grid> 
+          ))}
+      </Grid>
+    </>
+  );
+}
 
 export default Products;

@@ -5,7 +5,7 @@ const cartSlice = createSlice({
     initialState: { items: [] },
     reducers: {
         addProduct(state, action) {
-            const { id, price, name, quantity } = action.payload;
+            const { id, price, name, img, quantity } = action.payload;
             (current(state))
             const existingProductIndex = state.items.findIndex(product => product.id === id);
 
@@ -21,7 +21,8 @@ const cartSlice = createSlice({
                     id,
                     price,
                     name,
-                    quantity
+                    quantity,
+                    img
                 });
             }
         }

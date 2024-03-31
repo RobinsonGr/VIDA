@@ -3,43 +3,41 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, CardActions, Button } from '@mui/material';
-import theme from '../../theme';
+import { Button, CardActionArea, CardActions } from '@mui/material';
 
-const ProductCard = ({ product }) => {
+export default function ProductCard({ product }) {
   return (
-    <Card sx={{ maxWidth: 200, height: 380, borderRadius: 2 }}> 
-      <CardActionArea sx={{
-          ':hover': {
-            backgroundColor: theme.palette.primary.light, 
-          }
-        }}
-      >
+    <Card sx={{ width: 320, maxWidth: '100%', height: '380px', boxShadow: 'lg', position: 'relative' }}>
+      <CardActionArea>
         <CardMedia
           component="img"
-          height="200" 
+          height="200px"
           src={product.img} // Use your actual image source
-          alt={product.name}  // Add an alt for accessibility
+          alt={product.name} // Add an alt for accessibility
         />
-        <CardContent sx={{ paddingBottom: 60 }}> 
-          <Typography gutterBottom variant="subtitle1" component="div">
-            {product.name}
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            {product.price}
-          </Typography>
-        </CardContent>
+      <CardContent>
+        <Typography gutterBottom variant="h6" component="div" sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {product.name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {product.stock <= 10 ? (
+            <span style={{ fontSize: '1rem', fontWeight: 'normal', color: 'green' }}>
+              Only {product.stock} left in stock!
+            </span>
+          ) : (
+            product.stock
+            )}
+        </Typography>
+        <Typography variant="h6" component="div" sx={{ color: 'primary.main', fontWeight: 'bold', fontSize: '1rem' }}>
+          ${product.price}
+        </Typography>
+      </CardContent>
       </CardActionArea>
-      <CardActions sx={{ position: 'absolute', bottom: 15, justifyContent: 'center' }}> 
-        <Button size="small" variant="contained" sx={{ 
-            background: 'accent.main',
-            color: 'white' // Or your preferred text color
-          }}>
-          View Details
+      <CardActions sx={{ position: 'absolute', bottom: 0, width: '100%' }}>
+        <Button variant="contained" color="primary" size="large" sx={{color: "#FFFFFF"}}>
+          Watch more
         </Button>
       </CardActions>
     </Card>
   );
-};
-
-export default ProductCard;
+}
