@@ -36,7 +36,25 @@ const theme = createTheme({
           color: 'white' 
         }
       }
-    }
+    },
+    MuiOutlinedInput: { 
+      styleOverrides: {
+        root: { 
+          //fontSize: '16px',
+          //height: '70px',
+          marginBottom: '10px'
+        }
+      } 
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          //display: 'flex',
+          //alignItems: 'center',  
+               
+        },
+      },
+    }, 
   }
 });
 

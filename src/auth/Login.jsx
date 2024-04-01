@@ -29,14 +29,14 @@ const LoginForm = () => {
     backgroundSize: 'cover', }}>
       <Grid item xs={12} sm={8} md={6}>
       <Box
-  sx={{
-    width: '350px',
-    margin: '20px auto',
-    padding: '20px',
-    border: '1px solid #ddd',
-    borderRadius: '5px',
-    backgroundColor: 'rgba(255, 255, 255, 0.9)', 
-  }}
+      sx={{
+        width: '350px',
+        margin: '20px auto',
+        padding: '20px',
+        border: '1px solid #ddd',
+        borderRadius: '5px',
+        backgroundColor: 'rgba(255, 255, 255, 0.9)', 
+      }}
 >
           <Typography variant="h5" sx={{ textAlign: 'center', marginBottom: '20px', color: '#000' }}>
             Login
@@ -52,13 +52,6 @@ const LoginForm = () => {
                   fullWidth
                   value={values.email}
                   onChange={handleChange}
-                  sx={{
-                    mb: 2,
-                    '& .MuiOutlinedInput-root': {
-                      fontSize: '16px',
-                      padding: '10px',
-                    },
-                  }}
                 />
                 <ErrorMessage name="email" component="div" style={{ color: 'red' }} />
 
@@ -70,13 +63,6 @@ const LoginForm = () => {
                   fullWidth
                   value={values.password}
                   onChange={handleChange}
-                  sx={{
-                    mb: 2,
-                    '& .MuiOutlinedInput-root': {
-                      fontSize: '16px',
-                      padding: '10px',
-                    },
-                  }}
                 />
                 <ErrorMessage name="password" component="div" style={{ color: 'red' }} />
 
