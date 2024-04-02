@@ -5,6 +5,8 @@ import { AppBar, Toolbar, IconButton, Menu, MenuItem, useTheme, Button, Box, use
 import MenuIcon from '@mui/icons-material/Menu';
 import CartButton from "../components/cart/cartButton";
 import { useSelector } from "react-redux";
+import ProfileMenu from "../components/profileMenu";
+import { logOutAPI } from "../api";
 
 
 const Logo = 'https://i.ibb.co/QPGLK94/ECO.png';
@@ -16,7 +18,6 @@ function Header() {
     const [anchorEl, setAnchorEl] = useState(null);
     const isOpen = Boolean(anchorEl);
     const theme = useTheme();
-
     const handleOpenMenu = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -28,6 +29,7 @@ function Header() {
     useEffect(() => {
         const fetchData = async () => {
             const categories = await getCategoriesAPI();
+           await  logOutAPI()
             setCategories(categories);
         };
         fetchData();
@@ -80,7 +82,7 @@ function Header() {
                     )}
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    {!isAuth && (
+                    {!isAuth ? (
                         <>
                             <Link to="/login">
                                 <Button variant="contained">Sign in</Button>
@@ -89,12 +91,23 @@ function Header() {
                                 <Button variant="contained">Sign up</Button>
                             </Link>
                         </>
+                    ) : (
+                       <ProfileMenu></ProfileMenu>
                     )}
-                    <CartButton />
+                    <IconButton
+                        size="large"
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        sx={{ml: '5px'}}
+                    >
+                        <CartButton />
+                    </IconButton>
+                 
                 </Box>
             </Toolbar>
         </AppBar>
     );
 };
 
-export default Header;
+export default Header

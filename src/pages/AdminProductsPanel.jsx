@@ -1,15 +1,19 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, Typography, Box, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getCategoriesAPI, getProductsbyCategoryId } from '../api';
-import EditProduct from '../components/EditProduct';
-import AddProduct from '../components/AddProduct';
+import EditProduct from '../components/productedit/EditProduct';
+import AddProduct from '../components/productedit/AddProduct';
 
 function AdminProductsPanel () {
 
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState({});
   const [currentProducts, setCurrentProducts] = useState([]);
-  const [editingProductId, setEditingProductId] = useState(null)
+
+  //This goes inside handleProductEdited, which is passing down to EditProduct,  when the product is edited, this state will change
+  //every time the value changes between true and false, it will force to useEffect from retrieveProduct to give the updated products
+  const [productEdited, setProductEdited] = useState(false);
+  const [editingProductId, setEditingProductId] = useState(null);
   //Toggle button to change between EditProduct and AddProduct
   const [toggleProductOption, setToggleProductOption] = useState(false);
 
@@ -22,7 +26,8 @@ function AdminProductsPanel () {
     };
 
     retrieveCategories()
-  }, [])
+    setProductEdited(false)
+  }, [productEdited])
 
   //Every thie a category is selected, the code wrapped by useEffect will be execute and will retrieve the products
   useEffect(() => {
@@ -35,6 +40,15 @@ function AdminProductsPanel () {
       retrieveProducts()
     }    
   }, [selectedCategory])
+
+//this will be passing down to EditProducts (it will close the form and update the products)
+  const handleProductEdited = () => {
+    //will change the ProductEdited which is the dependency of useEffect's categorics-products logic, to get the lastest updateds 
+    //and when the editing is done, the same product will appear edited
+    setProductEdited(true)
+    //to close the form after the button submit (edit form) is hit.
+    setEditingProductId(null)
+  }
 
 
   //Selected category inside for the dropdown menu
@@ -50,56 +64,87 @@ function AdminProductsPanel () {
       setEditingProductId(id);
     }
   };
-  
-
 
   return (
-    <>
-    {/*Categories dropdown, every tiem a category is selected, handleSelectCategory will retrieve products lists */ }
-    <FormControl sx={{marginBottom: 10}}>
-      {(selectedCategory && selectedCategory.id) && ( // Only render Select after data categories is fetched
-        <>
-        <InputLabel>Select Category</InputLabel>
-          <Select
-          value={selectedCategory}
-          onChange={handleSelectCategory}
-          name="category"
-          >
-          {categories.map(category => {
-            return <MenuItem key={category.id} value={category}>{category.name}</MenuItem>
-          })}
-        </Select>
-        </>
-      )}
-    </FormControl>
-{/*Edit product section */}
+    <Box sx={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      alignItems: 'center', 
+      width: '80%', 
+      margin: '20px auto',
+      padding: '20px',
+      border: '1px solid #e0e0e0',
+      borderRadius: '5px',
+      boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
+    }}>
+      {/* Categories dropdown */}
+      <FormControl sx={{ marginBottom: 10}}>
+        {selectedCategory && selectedCategory.id && ( 
+          <>
+            <InputLabel>Select Category</InputLabel>
+            <Select
+              value={selectedCategory}
+              onChange={handleSelectCategory}
+              name="category"
+            >
+              {categories.map(category => (
+                <MenuItem key={category.id} value={category}>{category.name}</MenuItem>
+              ))}
+            </Select>
+          </>
+        )}
+      </FormControl>
 
-{/* Toggle to change between editProduct(true) and AddProduct, but default will appear EditProduct first*/}
-      
-      <Button onClick={() => {setToggleProductOption(false)}}>Edit Product</Button>
-      <Button onClick={() => {setToggleProductOption(true)}}>Add Product</Button>
-      <Box >
-        {
-           toggleProductOption ? (
+      {/* Toggle for Edit / Add Product */}
+      <Box sx={{ marginBottom: '20px' }}> 
+        <Button 
+          onClick={() => {setToggleProductOption(false)}}
+          variant={toggleProductOption ? 'outlined' : 'contained'}
+        >
+          Edit Product
+        </Button>
+        <Button 
+          onClick={() => {setToggleProductOption(true)}}
+          variant={toggleProductOption ? 'contained' : 'outlined'} 
+        >
+          Add Product
+        </Button>
+      </Box>
 
-          <AddProduct></AddProduct>
-
-           ) : (
+      {/* Products edit/display section */}
+      <Box>
+        {toggleProductOption ? (
+          <AddProduct />
+        ) : (
+          <Box sx={
+            {
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }
+          }> 
+          {
               currentProducts.length > 0 && currentProducts.map((product) => 
-              editingProductId === product.id ? (
-                //EditProduct is a form handled by formik with validaton, if the user hits edit button this will apear
-              <EditProduct key={product.id}  editingProductId={editingProductId} setToggleProductOption={setToggleProductOption} productData={{...product}} />) : ((
-                <div key={product.id}>
-                  <Typography>{product.name}</Typography>
-              <Button onClick={() => handleEditingProduct(product.id)}>Edit</Button>
-              <Button>Delete</Button>
-              </div>))
-              )
-              )
-            } 
-        </Box>
 
-    </>
+              editingProductId === product.id ? (
+                <EditProduct 
+                  key={product.id} 
+                  productData={{...product}} 
+                  handleProductEdited={handleProductEdited}
+                />
+              ) : (
+                <Box sx={{ textAlign: 'center'}} key={product.id}>
+                  <Typography >{product.name}</Typography>
+                  <Button onClick={() => handleEditingProduct(product.id)}>Edit</Button>
+                  <Button>Delete</Button>
+                </Box>
+              )
+            )
+          }
+          </Box>
+        )} 
+      </Box>
+    </Box>
   );
 };
 

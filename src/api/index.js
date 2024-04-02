@@ -126,6 +126,27 @@ function editUserAPI(dataUpdated) {
     .then(response => response)
 };
 
+
+function logOutAPI() {
+    return fetch(`${URL}/user/logout`, {
+        method: 'GET',
+        credentials: 'include' // Include credentials in the request
+    })
+    .then(responseRaw => {
+        if (!responseRaw.ok) {
+            throw new Error('Logout failed');
+        }
+        return responseRaw.json();
+    })
+    .then(response => response)
+    .catch(error => {
+        console.error('Error with logging:', error);
+        throw error; 
+    });
+};
+
+
+
 export {
     getProducts, 
     getCategoriesAPI, 
@@ -135,5 +156,6 @@ export {
     editUserAPI,
     getProductsbyCategoryId,
     editedProductAPI,
+    logOutAPI,
     addProduct
 };
