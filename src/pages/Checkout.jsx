@@ -1,4 +1,3 @@
-// CheckoutPage.js
 import React from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 
@@ -17,7 +16,7 @@ const CheckoutPage = ({ cartItems }) => {
       payment_method: {
         card: elements.getElement(CardElement),
         billing_details: {
-          name: 'John Doe',
+          name: 'randomName xd',
         },
       },
     });
