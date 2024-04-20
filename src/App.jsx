@@ -13,6 +13,8 @@ import { Navigate } from "react-router-dom";
 import { fetchUserAuth } from './features/authSlice';
 import AdminProductsPanel from './pages/AdminProductsPanel';
 import Home from './pages/Home';
+
+
 function App() {
   const dispatch = useDispatch()
 
