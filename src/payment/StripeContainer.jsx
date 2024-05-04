@@ -52,7 +52,6 @@ fetchData();
 
 return (
     <>
-        <h1>Stripe</h1>
         {clientSecret && stripePromise && (
             <Elements stripe={stripePromise} options={{clientSecret}}>
                 <PaymentForm/>

@@ -13,7 +13,7 @@ import { Navigate } from "react-router-dom";
 import { fetchUserAuth } from './features/authSlice';
 import AdminProductsPanel from './pages/AdminProductsPanel';
 import Home from './pages/Home';
-import StripeContainer from './payment/StripeContainer';
+import Payment from './pages/Payment';
 
 function App() {
   const dispatch = useDispatch()
@@ -32,7 +32,7 @@ function App() {
             <Route path="/" element={<Home/>}/>
             <Route path='/category/:category' element={<Products />} />
             <Route path='/editproducts' element={<AdminProductsPanel />} /> 
-            <Route path='/stripe' element={<StripeContainer/>} /> 
+            <Route path='/stripe' element={<Payment/>} /> 
             <Route path='/signup' element={!isAuth ? (
               <RegistrationForm />
             ) : (

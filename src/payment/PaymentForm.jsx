@@ -7,7 +7,7 @@ export default function CheckoutForm() {
   const elements = useElements();
 
   const [message, setMessage] = useState(null);
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(true);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,8 +17,6 @@ export default function CheckoutForm() {
       // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
-
-    setIsProcessing(true);
 
     const { error } = await stripe.confirmPayment({
       elements,
@@ -34,17 +32,24 @@ export default function CheckoutForm() {
       setMessage("An unexpected error occured.");
     }
 
-    setIsProcessing(false);
+    console.log('say hello2')
+
+    setTimeout(() => {
+      setIsProcessing(false);
+      console.log('say hello')
+    }, 4000)
+    
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement/>
-      <button disabled={isProcessing || !stripe || !elements}>
-        <span>
-          {isProcessing ? "Processing ... " : "Pay now"}
-        </span>
-      </button>
+        {isProcessing ? "Processing ... " : (
+          <button disabled={isProcessing || !stripe || !elements}>
+          Pay now
+        </button>
+        )}
+      
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </form>
