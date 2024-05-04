@@ -10,13 +10,11 @@ const cartSlice = createSlice({
             const existingProductIndex = state.items.findIndex(product => product.id === id);
 
             if (existingProductIndex !== -1) {
-                // If product already exists, update quantity
                 state.items[existingProductIndex] = {
                     ...state.items[existingProductIndex],
                     quantity: state.items[existingProductIndex].quantity + 1
                 };
             } else {
-                // If product does not exist, add it with quantity 1
                 state.items.push({
                     id,
                     price,
@@ -25,9 +23,14 @@ const cartSlice = createSlice({
                     img
                 });
             }
-        }
+        },
+        removeProduct(state, action) {
+            const { id } = action.payload;
+            console.log(id)
+            state.items = current(state.items).filter(item => item.id !== id);
+          },
     }
 });
 
-export const { addProduct } = cartSlice.actions;
+export const { addProduct, removeProduct } = cartSlice.actions;
 export default cartSlice.reducer;

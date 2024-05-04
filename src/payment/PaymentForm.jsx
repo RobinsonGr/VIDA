@@ -1,13 +1,21 @@
 import { PaymentElement } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
+import { Button } from "@mui/material";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
   const [message, setMessage] = useState(null);
-  const [isProcessing, setIsProcessing] = useState(true);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [showButton, setShowButton] = useState(false);
+
+
+
+  setTimeout(() => {
+    setShowButton(true)
+  }, 6000)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +25,8 @@ export default function CheckoutForm() {
       // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
+
+    setIsProcessing(true);
 
     const { error } = await stripe.confirmPayment({
       elements,
@@ -32,24 +42,22 @@ export default function CheckoutForm() {
       setMessage("An unexpected error occured.");
     }
 
-    console.log('say hello2')
-
-    setTimeout(() => {
-      setIsProcessing(false);
-      console.log('say hello')
-    }, 4000)
-    
+    setIsProcessing(false);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement/>
-        {isProcessing ? "Processing ... " : (
-          <button disabled={isProcessing || !stripe || !elements}>
-          Pay now
-        </button>
-        )}
-      
+      {showButton && (
+         <Button
+         variant="contained"
+         color="primary"
+         size="large"
+         disabled={isProcessing || !stripe || !elements}
+       >
+         {isProcessing ? "Processing ..." : "Pay now"}
+       </Button>
+      )}
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </form>

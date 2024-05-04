@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, IconButton, Menu, MenuItem, Typography, Button, Box, useMediaQuery } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import CartButton from '../components/cart/cartButton';
+import Cart from '../components/cart/Cart';
 import ProfileMenu from '../components/profileMenu';
 import { useSelector } from 'react-redux';
 import { getCategoriesAPI } from '../api';
@@ -100,7 +100,7 @@ function Header() {
             <ProfileMenu />
           )}
           <IconButton size="large" aria-label="cart">
-            <CartButton />
+            <Cart />
           </IconButton>
         </Box>
       </Toolbar>
