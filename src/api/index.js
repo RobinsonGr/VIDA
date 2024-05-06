@@ -1,6 +1,20 @@
 const URL = 'http://localhost:3000'
 
 
+
+function getProduct(productId) {
+    //Retrieveing the product list by category
+   return fetch(`${URL}/products/individual/${productId}`)
+
+    //Parsing the response as JSON
+        .then((response) => response.json())
+        //resolving the promise with the retrieved data
+        .then((data) => {
+            return data
+        })
+};
+
+
 function getCategoriesAPI () {
     return fetch(`${URL}/categories`)
         .then(response => response.json())
@@ -148,6 +162,7 @@ function logOutAPI() {
 
 
 export {
+    getProduct,
     getProducts, 
     getCategoriesAPI, 
     getAuthValidation, 

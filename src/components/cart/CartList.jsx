@@ -15,22 +15,16 @@ function CartList() {
 
     return (
       <>
-          
-            {true ? (
-               <Typography variant="h6" align="center" color="textSecondary">
-                    Your cart is empty
-                </Typography>
-            ) : (
-               <>
-                 <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-                      {cartItems.map(item => (
-                  <CartItem userData={item} key={item.id}/>
-                ))}
-                  <Typography variant="h6">Tootal:</Typography>
-                  <Typography variant="h6">99dsf${total}</Typography>
-                </Box>
-               </> 
-            )}  
+         <>
+           <Box sx={{ display: 'flex', flexDirection: 'column ', justifyContent: 'space-between', marginTop: '20px' }}>
+                {cartItems.map(item => (
+            <CartItem userData={item} key={item.id}/>
+          ))}
+            <Typography variant="h6">Total:</Typography>
+            <Typography variant="h6">${total}</Typography>
+          </Box>
+         </> 
+           
     </>
     );
 };

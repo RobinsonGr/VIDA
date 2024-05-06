@@ -7,22 +7,18 @@ export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [message, setMessage] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [showButton, setShowButton] = useState(false);
 
-
-
   setTimeout(() => {
-    setShowButton(true)
-  }, 6000)
+    setShowButton(true);
+  }, 2500);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
 
@@ -50,6 +46,8 @@ export default function CheckoutForm() {
       <PaymentElement/>
       {showButton && (
          <Button
+         sx={{ marginTop: '19px' }}
+         onClick={handleSubmit}
          variant="contained"
          color="primary"
          size="large"
@@ -58,8 +56,6 @@ export default function CheckoutForm() {
          {isProcessing ? "Processing ..." : "Pay now"}
        </Button>
       )}
-      {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
     </form>
   );
-}
+};

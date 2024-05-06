@@ -18,7 +18,6 @@ useEffect(() => {
             const response = await fetch(`${baseURL}/stripe/config`);
             const { publishableKey } = await response.json();
             setStripePromise(loadStripe(publishableKey))
-            console.log(publishableKey)
         } catch (err) {
             console.error('Error fetching Stripe config:', err);
         };

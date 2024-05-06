@@ -14,6 +14,7 @@ import { fetchUserAuth } from './features/authSlice';
 import AdminProductsPanel from './pages/AdminProductsPanel';
 import Home from './pages/Home';
 import Payment from './pages/Payment';
+import Product from './pages/Product';
 
 function App() {
   const dispatch = useDispatch()
@@ -31,8 +32,10 @@ function App() {
           <Route path="/" element={<Layout/>}>
             <Route path="/" element={<Home/>}/>
             <Route path='/category/:category' element={<Products />} />
+            <Route path='/product/:product' element={<Product />} />
             <Route path='/editproducts' element={<AdminProductsPanel />} /> 
-            <Route path='/stripe' element={<Payment/>} /> 
+            <Route path='/payment' element={<Payment/>} /> 
+            <Route path='/payment' element={<Payment/>} /> 
             <Route path='/signup' element={!isAuth ? (
               <RegistrationForm />
             ) : (
