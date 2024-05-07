@@ -25,7 +25,7 @@ const LoginForm = () => {
   };
 
   return (
-    <Grid container alignItems="center" justifyContent="center" style={{ minHeight: '100vh', backgroundImage: 'url(https://i.ibb.co/Q9Q3s15/eco-profile-background.jpg)',
+    <Grid container alignItems="center" justifyContent="center" style={{ minHeight: '100vh', backgroundImage: 'url(https://i.ibb.co/j8QGDWN/eco-profile-background.jpg)',
     backgroundSize: 'cover', }}>
       <Grid item xs={12} sm={8} md={6}>
       <Box

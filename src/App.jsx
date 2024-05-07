@@ -35,7 +35,6 @@ function App() {
             <Route path='/product/:product' element={<Product />} />
             <Route path='/editproducts' element={<AdminProductsPanel />} /> 
             <Route path='/payment' element={<Payment/>} /> 
-            <Route path='/payment' element={<Payment/>} /> 
             <Route path='/signup' element={!isAuth ? (
               <RegistrationForm />
             ) : (

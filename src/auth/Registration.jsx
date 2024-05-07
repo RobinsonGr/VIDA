@@ -56,7 +56,7 @@ const  RegistrationForm = () => {
 
   
   return (
-    <Grid container alignItems="center" justifyContent="center" style={{ minHeight: '100vh', backgroundImage: 'url(https://freeimghost.net/images/2024/03/30/registration-login.jpeg)', backgroundSize: 'cover' }}>
+    <Grid container alignItems="center" justifyContent="center" style={{ minHeight: '100vh', backgroundImage: 'url(https://i.ibb.co/WyVgyGg/registration-login.jpg)', backgroundSize: 'cover' }}>
       <Grid item>
         <Box 
           style={{
