@@ -22,7 +22,8 @@ function App() {
   //Check if the user is auth to allow some features
   useEffect(() => { 
     dispatch(fetchUserAuth())
-  }, [])
+  }, []);
+  
   const isAuth = useSelector(state => state.auth.isAuth);
 
   return (
@@ -32,7 +33,7 @@ function App() {
           <Route path="/" element={<Layout/>}>
             <Route path="/" element={<Home/>}/>
             <Route path='/category/:category' element={<Products />} />
-            <Route path='/product/:product' element={<Product />} />
+            <Route path='/product/:id/:productname' element={<Product />} />
             <Route path='/editproducts' element={<AdminProductsPanel />} /> 
             <Route path='/payment' element={<Payment/>} /> 
             <Route path='/signup' element={!isAuth ? (

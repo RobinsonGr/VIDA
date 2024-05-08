@@ -6,14 +6,17 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 
 export default function ProductCard({ product }) {
+
+
+  
   return (
     <Card sx={{ width: 320, maxWidth: '100%', height: '380px', boxShadow: 'lg', position: 'relative' }}>
       <CardActionArea>
         <CardMedia
           component="img"
           height="200px"
-          src={product.img} // Use your actual image source
-          alt={product.name} // Add an alt for accessibility
+          src={product.img}
+          alt={product.name} 
         />
       <CardContent>
         <Typography gutterBottom variant="h6" component="div" sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>

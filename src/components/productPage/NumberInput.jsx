@@ -30,7 +30,7 @@ const NumberInput = React.forwardRef(function CustomNumberInput(props, ref) {
   );
 });
 
-export default function QuantityInput() {
+export default function QuantityInput({stock}) {
 
   const [value, setValue] = useState(1);
 
@@ -44,7 +44,7 @@ export default function QuantityInput() {
   return  <NumberInput
   aria-label="Quantity Input"
   min={1}
-  max={99}
+  max={stock}
   value={value}
   onChange={handleInputChange}
   defaultValue={1}

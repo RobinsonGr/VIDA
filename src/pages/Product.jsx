@@ -1,55 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getProduct } from "../api";
 import { Typography, Box, Button, Grid, Paper } from "@mui/material";
 import QuantityInput from "../components/productPage/NumberInput";
+import { useParams } from "react-router-dom";
 
 function Product() {
   const cartItems = useSelector((state) => state.cart.items);
-  const product = {
-    description: "Set of reusable bamboo utensils including fork, knife, and spoon.",
-    id: 2,
-    img: null,
-    name: "Eco-Friendly Home",
-    price: 13,
-    stock: 50,
-  };
+  const { id } = useParams();
+
+  const [productData, setProductData] = useState(null);
 
   useEffect(() => {
     const retrieveProduct = async () => {
-      console.log(await getProduct(2));
+      const productInfo = await getProduct(id);
+      setProductData(productInfo);
     };
     retrieveProduct();
   }, []);
 
+  console.log(productData);
+
   return (
     <Box style={{ flexGrow: 1, padding: "16px" }}>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <Paper style={{ width: "100%", marginBottom: "16px" }}>
-            <img src={product.img} alt={product.name} style={{ width: "100%", height: "auto" }} />
-          </Paper>
+    {productData && (
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
+            <Paper style={{ width: "100%", marginBottom: "16px" }}>
+
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="h4" gutterBottom>
+              {productData.name}
+            </Typography>
+            <Typography variant="subtitle1" gutterBottom>
+              Price: ${productData.price}
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              {productData.description}
+            </Typography>
+            <QuantityInput stock={productData.stock} />
+            <Button variant="contained" color="primary">
+              Add to Cart
+            </Button>
+            <Typography variant="body2" color="textSecondary" gutterBottom>
+              {productData.stock} in stock
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h4" gutterBottom>
-            {product.name}
-          </Typography>
-          <Typography variant="subtitle1" gutterBottom>
-            Price: ${product.price}
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            {product.description}
-          </Typography>
-          <Button variant="contained" color="primary">
-            Add to Cart
-          </Button>
-          <Typography variant="body2" color="textSecondary" gutterBottom>
-            {product.stock} in stock
-          </Typography>
-          <QuantityInput></QuantityInput>
-        </Grid>
-      </Grid>
-    </Box>
+      )}
+      </Box>
   );
 }
 
