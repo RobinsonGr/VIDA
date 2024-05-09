@@ -18,13 +18,14 @@ const ProfileMenu = () => {
     };
 
     const handleLogout = async () => {
+        console.log('Logging out...');
         try {
             await logOutAPI();
-            navigate('/')
+            console.log('Logout successful');
+            window.location.reload();
+            navigate('/');
         } catch (error) {
-            console.error('Error logging out:', error);
-        } finally {
-            handleMenuClose(); 
+            console.error('Logout error:', error);
         }
     };
 
@@ -49,7 +50,7 @@ const ProfileMenu = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleMenuClose}
             >
-                <MenuItem component={Link} to="/edit-profile" onClick={handleMenuClose}>
+                <MenuItem component={Link} to="/edituser" onClick={handleMenuClose}>
                     Edit Profile
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>

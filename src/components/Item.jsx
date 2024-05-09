@@ -62,7 +62,13 @@ function Item({ itemData }) {
             ${price}
           </Typography>
           <Typography variant="body2" color={stock > 0 ? theme.palette.primary.main : 'error.main'}>
-            Stock: {stock}
+             {stock <= 10 ? (
+            <span style={{ fontSize: '1rem', fontWeight: 'normal', color: 'green' }}>
+              Only {stock} left in stock!
+            </span>
+          ) : (
+            ` Stock: ${stock}`
+            )}
           </Typography>
         </Box> 
       </CardContent>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AppBar, Toolbar, IconButton, Menu, MenuItem, Typography, Button, Box, useMediaQuery } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Cart from '../components/cart/Cart';
@@ -13,6 +13,8 @@ function Header() {
   const [categories, setCategories] = useState([]);
   const isAuth = useSelector(state => state.auth.isAuth);
   const isMobile = useMediaQuery('(max-width:600px)');
+  const location = useLocation();
+  const shouldApplyMarginBottom = !(location.pathname === '/' || location.pathname === '/login' || location.pathname === '/signup');
 
 
   const [anchorEl, setAnchorEl] = useState(null); //This state is to control the opening and closing of the slide-out nav, 
@@ -36,8 +38,8 @@ function Header() {
   }, []);
 
   return (
-    <AppBar position="static">
-      <Toolbar sx={{ justifyContent: 'space-between' }}>  {/*Toolbar groups elements within the navegation bar*/ }
+    <AppBar position="static" style={shouldApplyMarginBottom ? { marginBottom: '2rem' } : null} >
+      <Toolbar sx={{ justifyContent: 'space-between' }}> 
         <Box>
           <img src={Logo} alt="Logo" style={{ height: '40px' }} />
           </Box>

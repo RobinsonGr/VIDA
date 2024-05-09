@@ -144,9 +144,10 @@ function editUserAPI(dataUpdated) {
 function logOutAPI() {
     return fetch(`${URL}/user/logout`, {
         method: 'GET',
-        credentials: 'include' // Include credentials in the request
+        credentials: 'include' 
     })
     .then(responseRaw => {
+        console.log(responseRaw)
         if (!responseRaw.ok) {
             throw new Error('Logout failed');
         }

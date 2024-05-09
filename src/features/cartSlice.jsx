@@ -12,7 +12,7 @@ const cartSlice = createSlice({
             if (existingProductIndex !== -1) {
                 state.items[existingProductIndex] = {
                     ...state.items[existingProductIndex],
-                    quantity: state.items[existingProductIndex].quantity + 1
+                    quantity: state.items[existingProductIndex].quantity + quantity
                 };
             } else {
                 state.items.push({

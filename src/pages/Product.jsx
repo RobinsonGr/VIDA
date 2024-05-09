@@ -1,15 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { getProduct } from "../api";
 import { Typography, Box, Button, Grid, Paper } from "@mui/material";
 import QuantityInput from "../components/productPage/NumberInput";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../features/cartSlice";
 
 function Product() {
-  const cartItems = useSelector((state) => state.cart.items);
+  
   const { id } = useParams();
 
   const [productData, setProductData] = useState(null);
+
+  const [units, setUnits] = useState(1);
+  const dispatch = useDispatch()
+
+  const handleAddToCart = () => {
+    dispatch(addProduct({
+      id: productData.id,
+      price: productData.price,
+      name: productData.name,
+      img: productData.img,
+      quantity: units
+    }));
+  };
+
+  const handleProductsUnitsSelected = (event, value) => {
+    setUnits(value);
+  };
 
   useEffect(() => {
     const retrieveProduct = async () => {
@@ -30,6 +48,7 @@ function Product() {
 
             </Paper>
           </Grid>
+
           <Grid item xs={12} sm={6}>
             <Typography variant="h4" gutterBottom>
               {productData.name}
@@ -40,12 +59,20 @@ function Product() {
             <Typography variant="body1" gutterBottom>
               {productData.description}
             </Typography>
-            <QuantityInput stock={productData.stock} />
-            <Button variant="contained" color="primary">
+            <QuantityInput 
+            handleProductsUnitsSelected={handleProductsUnitsSelected}
+            stock={productData.stock}/>
+            <Button variant="contained" color="primary" onClick={handleAddToCart}>
               Add to Cart
             </Button>
-            <Typography variant="body2" color="textSecondary" gutterBottom>
-              {productData.stock} in stock
+            <Typography sx={{margin: '0.4rem'}} variant="body2" color="textSecondary" gutterBottom>
+            {productData.stock <= 10 ? (
+            <span style={{ fontSize: '1rem', fontWeight: 'normal', color: 'green' }}>
+              Only {productData.stock} left in stock!
+            </span>
+          ) : (
+            `${productData.stock} in stock`
+            )}
             </Typography>
           </Grid>
         </Grid>
