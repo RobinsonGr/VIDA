@@ -108,7 +108,7 @@ function getAuthValidation () {
     })
     .then(response => response.json())
     .then(data => {
-      (data)
+    console.log(data)
       return data
     })
 };
@@ -127,13 +127,17 @@ function submitLoginAPI(userData) {
       .then(responseRaw => {
         return responseRaw.json()
       })
-      .then(response => response);      
 };
 
 function editUserAPI(dataUpdated) {
     
     return fetch(`${URL}/user/edituser`, {
         method: 'PUT',
+        credentials: "include",
+        headers: {
+            // Accept: "application/json",
+             'Content-Type': 'application/json' 
+         },
         body: JSON.stringify(dataUpdated)
     })
     .then(responseRaw => responseRaw.json())

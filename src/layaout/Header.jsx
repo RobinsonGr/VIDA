@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AppBar, Toolbar, IconButton, Menu, MenuItem, Typography, Button, Box, useMediaQuery } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Menu, MenuItem, Typography, Button, Box, useMediaQuery, Grid } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Cart from '../components/cart/Cart';
 import ProfileMenu from '../components/profileMenu';
@@ -39,72 +39,78 @@ function Header() {
 
   return (
     <AppBar position="static" style={shouldApplyMarginBottom ? { marginBottom: '2rem' } : null} >
-      <Toolbar sx={{ justifyContent: 'space-between' }}> 
-        <Box>
-          <img src={Logo} alt="Logo" style={{ height: '40px' }} />
-          </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        {isMobile ? (
-            <> 
-            <IconButton onClick={handleOpenMenu} style={{ color: 'white' }}>
-              <MenuIcon />
-            </IconButton>
+      <Toolbar> 
+        <Grid container wrap="nowrap" alignItems="center"> 
+          <Grid item xs={1}>
+            <Box>
+              <img src={Logo} alt="Logo" style={{ height: '40px' }} />
+            </Box>
+          </Grid>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          {isMobile ? (
+              <Grid item xs={8}> 
+              <IconButton onClick={handleOpenMenu} style={{ color: 'white' }}>
+                <MenuIcon />
+              </IconButton>
 
-            <Menu
-              anchorEl={anchorEl}
-              open={isOpen}
-              onClose={handleCloseMenu}
-            > 
-              {
-              categories.map(route => (
-                  //it's important to close the menu with handleCloseMenu when the category is selected.
-                  <MenuItem onClick={handleCloseMenu} key={route.name}>
-                      {/*Using regex to convert string with spaces into string with hypes to match the url pattern */}
-                      <Link to={`/category/${route.name.replace(/\s+/g, '-').toLowerCase()}`}>{route.name}</Link>
-                  </MenuItem>
+              <Menu
+                anchorEl={anchorEl}
+                open={isOpen}
+                onClose={handleCloseMenu}
+              > 
+                {
+                categories.map(route => (
+                    //it's important to close the menu with handleCloseMenu when the category is selected.
+                    <MenuItem onClick={handleCloseMenu} key={route.name}>
+                        {/*Using regex to convert string with spaces into string with hypes to match the url pattern */}
+                        <Link to={`/category/${route.name.replace(/\s+/g, '-').toLowerCase()}`}>{route.name}</Link>
+                    </MenuItem>
+                ))
+                } 
+              </Menu>
+              </Grid>
+          ) : ( 
+              
+              categories.map((route, index) => (
+                <Button
+                  key={index}
+                  component={Link}
+                  to={`/category/${route.name.replace(/\s+/g, '-').toLowerCase()}`}
+                  variant="text"
+                  color="inherit"
+                  sx={{ fontSize: '1rem', textTransform: 'capitalize' }}
+                >
+                  {route.name}
+                </Button>
               ))
-              } 
-            </Menu>
-            </>
-        ) : ( 
-            
-            categories.map((route, index) => (
-              <Button
-                key={index}
-                component={Link}
-                to={`/category/${route.name.replace(/\s+/g, '-').toLowerCase()}`}
-                variant="text"
-                color="inherit"
-                sx={{ fontSize: '1rem', textTransform: 'capitalize' }}
-              >
-                {route.name}
+            )}
+            {!isMobile && categories.length > 4 && (
+              <Button variant="text" color="inherit" onClick={handleOpenMenu}>
+                More
               </Button>
-            ))
-          )}
-          {!isMobile && categories.length > 4 && (
-            <Button variant="text" color="inherit" onClick={handleOpenMenu}>
-              More
-            </Button>
-          )}
-         
-        </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          {!isAuth ? (
-            <>
-              <Link to="/login">
-                <Button variant="contained">Sign in</Button>
-              </Link>
-              <Link to="/signup">
-                <Button variant="contained">Sign up</Button>
-              </Link>
-            </>
-          ) : (
-            <ProfileMenu />
-          )}
-          <IconButton size="large" aria-label="cart">
-            <Cart />
-          </IconButton>
-        </Box>
+            )}
+          
+          </Box>
+          <Grid item container justifyContent="flex-end" alignItems="center"  xs={4}>
+            <Box sx={{alignItems: 'center'}}> 
+              {!isAuth ? (
+                <>
+                  <Link to="/login">
+                    <Button variant="contained">Sign in</Button>
+                  </Link>
+                  <Link to="/signup">
+                    <Button variant="contained">Sign up</Button>
+                  </Link>
+                </>
+              ) : (
+                <ProfileMenu />
+              )}
+              <IconButton size="large" aria-label="cart">
+                <Cart />
+              </IconButton>
+            </Box>
+          </Grid>
+        </Grid>
       </Toolbar>
     </AppBar>
   );

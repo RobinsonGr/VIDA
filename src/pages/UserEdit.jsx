@@ -1,9 +1,11 @@
-import React from 'react';
-import { TextField, Button } from '@mui/material';
+import React, { useState } from 'react'; // Import useState
+import { TextField, Button, Typography } from '@mui/material'; // Import Typography
 import { Field, useFormik } from "formik";
 import { useSelector } from "react-redux";
 import { object, string } from 'yup';
 import { editUserAPI } from '../api';
+import { useDispatch } from 'react-redux';
+import { fetchUserAuth } from '../features/authSlice';
 
 const validationSchema = object({
     name: string().required('Name is required'),
@@ -12,6 +14,7 @@ const validationSchema = object({
 
 function UserEdit() {
     const { name, address, email } = useSelector(state => state.auth);
+    const dispatch = useDispatch();
 
     const initialValues = {
         name: name || '',
@@ -20,13 +23,16 @@ function UserEdit() {
         password: '*********'
     };
 
+    const [changesSaved, setChangesSaved] = useState(false); // State to track if changes were saved
+
     const handleSubmit = async ({ name, address }, { resetForm }) => {
         try {
             await editUserAPI({ name, address });
+            dispatch(fetchUserAuth());
+            setChangesSaved(true); // Set changesSaved to true after saving changes
         } catch (err) {
             console.error(err);
         }
-        resetForm();
     };
 
     const formik = useFormik({
@@ -80,6 +86,13 @@ function UserEdit() {
                 helperText={formik.touched.password && formik.errors.password}
             />
             <Button variant="contained" type="Submit" style={{ marginTop: '1rem' }}>Save changes</Button>
+
+            {/* Conditional rendering for changes saved message */}
+            {changesSaved && (
+                <Typography variant="body1" color="green" style={{ marginTop: '1rem' }}>
+                    Changes were saved successfully!
+                </Typography>
+            )}
         </form>
     );
 }
