@@ -1,32 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AppBar, Toolbar, IconButton, Menu, MenuItem, Typography, Button, Box, useMediaQuery, Grid } from '@mui/material';
+import { AppBar, ListItemText, Toolbar, IconButton, Menu, MenuList, MenuItem, Paper, Button, Box, useMediaQuery, Grid, useTheme} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Cart from '../components/cart/Cart';
 import ProfileMenu from '../components/profileMenu';
 import { useSelector } from 'react-redux';
 import { getCategoriesAPI } from '../api';
+import MobileMenu from '../components/header/MobileMenu';
 
 const Logo = 'https://i.ibb.co/QPGLK94/ECO.png';
 
 function Header() {
   const [categories, setCategories] = useState([]);
   const isAuth = useSelector(state => state.auth.isAuth);
-  const isMobile = useMediaQuery('(max-width:600px)');
+  const isTabletOrSmaller  = useMediaQuery('(max-width:950px)');
   const location = useLocation();
   const shouldApplyMarginBottom = !(location.pathname === '/' || location.pathname === '/login' || location.pathname === '/signup');
+  const theme = useTheme()
 
 
-  const [anchorEl, setAnchorEl] = useState(null); //This state is to control the opening and closing of the slide-out nav, 
-  const isOpen = Boolean(anchorEl); //This goes into the property open, works as a switch
+  // const [anchorEl, setAnchorEl] = useState(null); //This state is to control the opening and closing of the slide-out nav, 
+  // const isOpen = Boolean(anchorEl); //This goes into the property open, works as a switch
 
-  const handleOpenMenu = (event) => {   //CurrentTarget takes the actual element where the listeneer is attached (the button)
-      setAnchorEl(event.currentTarget);  //its for indicate to Nav where to anchor the slide-out nav drawer
-  };
+  // const handleOpenMenu = (event) => {   //CurrentTarget takes the actual element where the listeneer is attached (the button)
+  //     setAnchorEl(event.currentTarget);  //its for indicate to Nav where to anchor the slide-out nav drawer
+  // };
 
-  const handleCloseMenu = () => {
-      setAnchorEl(null)
-  };
+  // const handleCloseMenu = () => {
+  //     setAnchorEl(null)
+  // };
 
 
   useEffect(() => {
@@ -41,58 +43,26 @@ function Header() {
     <AppBar position="static" style={shouldApplyMarginBottom ? { marginBottom: '2rem' } : null} >
       <Toolbar> 
         <Grid container wrap="nowrap" alignItems="center"> 
-          <Grid item xs={1}>
+          <Grid item xs={1} {...(isTabletOrSmaller ? { order: 2 } : {})}>
             <Box>
               <img src={Logo} alt="Logo" style={{ height: '40px' }} />
             </Box>
           </Grid>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          {isMobile ? (
-              <Grid item xs={8}> 
-              <IconButton onClick={handleOpenMenu} style={{ color: 'white' }}>
-                <MenuIcon />
-              </IconButton>
+          {/* <Box sx={{ display: 'flex', alignItems: 'center' }}> */}
+          <Grid item {...(isTabletOrSmaller ? { order: 1 } : {})} sx={{ display: 'flex', justifyContent: 'flex-start' }} xs={1} md={9}>                  
+          {isTabletOrSmaller ? (
 
-              <Menu
-                anchorEl={anchorEl}
-                open={isOpen}
-                onClose={handleCloseMenu}
-              > 
-                {
-                categories.map(route => (
-                    //it's important to close the menu with handleCloseMenu when the category is selected.
-                    <MenuItem onClick={handleCloseMenu} key={route.name}>
-                        {/*Using regex to convert string with spaces into string with hypes to match the url pattern */}
-                        <Link to={`/category/${route.name.replace(/\s+/g, '-').toLowerCase()}`}>{route.name}</Link>
-                    </MenuItem>
-                ))
-                } 
-              </Menu>
-              </Grid>
+           <MobileMenu categories={categories}></MobileMenu>
+
           ) : ( 
-              
-              categories.map((route, index) => (
-                <Button
-                  key={index}
-                  component={Link}
-                  to={`/category/${route.name.replace(/\s+/g, '-').toLowerCase()}`}
-                  variant="text"
-                  color="inherit"
-                  sx={{ fontSize: '1rem', textTransform: 'capitalize' }}
-                >
-                  {route.name}
-                </Button>
-              ))
-            )}
-            {!isMobile && categories.length > 4 && (
-              <Button variant="text" color="inherit" onClick={handleOpenMenu}>
-                More
-              </Button>
-            )}
+             <Menu categories={categories} isTabletOrSmaller={isTabletOrSmaller}></Menu>
+                   ) 
+                }
+              </Grid>
+            
           
-          </Box>
-          <Grid item container justifyContent="flex-end" alignItems="center"  xs={4}>
-            <Box sx={{alignItems: 'center'}}> 
+          <Grid item container xs={2} md={2} order={3} alignItems='center' justifyContent="flex-end" wrap="nowrap">
+          
               {!isAuth ? (
                 <>
                   <Link to="/login">
@@ -108,7 +78,7 @@ function Header() {
               <IconButton size="large" aria-label="cart">
                 <Cart />
               </IconButton>
-            </Box>
+          
           </Grid>
         </Grid>
       </Toolbar>
