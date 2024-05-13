@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Menu, useTheme, Button } from '@mui/material';
+import { Menu, useTheme, Button, MenuItem, ListItemText } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-const Menu = ({ categories, isTabletOrSmaller }) => {
+const DesktopMenu = ({ categories, isTabletOrSmaller }) => {
     const theme = useTheme()
     
-    const [anchorEl, setAnchorEl] = useState(true); //This state is to control the opening and closing of the slide-out nav, 
+    const [anchorEl, setAnchorEl] = useState(null); //This state is to control the opening and closing of the slide-out nav, 
     const isOpen = Boolean(anchorEl); //This goes into the property open, works as a switch
   
     const handleOpenMenu = (event) => {   //CurrentTarget takes the actual element where the listeneer is attached (the button)
@@ -15,9 +15,7 @@ const Menu = ({ categories, isTabletOrSmaller }) => {
     const handleCloseMenu = () => {
         setAnchorEl(null)
     };
-    console.log('he')
-
-
+  
     console.log(categories)
   return (
    <>
@@ -35,7 +33,7 @@ const Menu = ({ categories, isTabletOrSmaller }) => {
                   </Button>
                 ))
         }
-        {/* {!isTabletOrSmaller && categories.length > 4 && (
+        {!isTabletOrSmaller && categories.length > 4 && (
             <Button variant="text" color="inherit" onClick={handleOpenMenu}>
             More
             </Button>
@@ -47,7 +45,11 @@ const Menu = ({ categories, isTabletOrSmaller }) => {
             anchorEl={anchorEl}
             open={isOpen}
             onClose={handleCloseMenu}
+            slotProps={{ paper: { style: { backgroundColor: theme.palette.primary.main} } }} 
+
           >
+            <ListItemText>CategoryA</ListItemText>
+            
             {categories.slice(4).map(route => (
               <MenuItem onClick={handleCloseMenu} key={route.name}>
                 <ListItemText>
@@ -57,11 +59,11 @@ const Menu = ({ categories, isTabletOrSmaller }) => {
             ))}
           </Menu>
            ) 
-        } */}
+        }
         </>
 
   )}
 
-export default Menu;
+export default DesktopMenu;
 
 
