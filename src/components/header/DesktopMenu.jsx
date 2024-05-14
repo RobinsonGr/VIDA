@@ -16,7 +16,6 @@ const DesktopMenu = ({ categories, isTabletOrSmaller }) => {
         setAnchorEl(null)
     };
   
-    console.log(categories)
   return (
    <>
         {

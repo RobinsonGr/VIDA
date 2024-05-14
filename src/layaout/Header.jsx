@@ -17,8 +17,6 @@ function Header() {
   const isTabletOrSmaller  = useMediaQuery('(max-width:899px)');
   const location = useLocation();
   const shouldApplyMarginBottom = !(location.pathname === '/' || location.pathname === '/login' || location.pathname === '/signup');
-  const theme = useTheme()
-
 
 
   useEffect(() => {
@@ -34,7 +32,7 @@ function Header() {
       <Toolbar> 
         <Grid container wrap="nowrap" alignItems="center" justifyContent={isTabletOrSmaller ? 'space-between' : 'flex-start'}
 > 
-          <Grid item xs={1} {...(isTabletOrSmaller ? { order: 2 } : {})} sx={{marginRight:'10px'}}>
+          <Grid item xs={1} {...(isTabletOrSmaller ? { order: 2 } : {})} sx={{marginRight:'1rem'}}>
             <Box>
               <img src={Logo} alt="Logo" style={{ height: '40px' }} />
             </Box>
@@ -45,16 +43,14 @@ function Header() {
 
            <MobileMenu categories={categories}></MobileMenu>
 
-          ) : ( 
-            <DesktopMenu categories={categories}></DesktopMenu>
-                   ) 
+          ) : (<DesktopMenu categories={categories}></DesktopMenu>) 
                 }
               </Grid>
             
           
           <Grid item container xs={2} md={3} order={3} alignItems='center' justifyContent="flex-end" wrap="nowrap">
-          
-              {!isAuth ? (
+           
+              {!isAuth && !isTabletOrSmaller ? (
                 <>
                   <Link to="/login">
                     <Button variant="contained">Sign in</Button>
@@ -64,8 +60,10 @@ function Header() {
                   </Link>
                 </>
               ) : (
-                <ProfileMenu />
+                isAuth && <ProfileMenu />
               )}
+
+              
               <IconButton size="large" aria-label="cart">
                 <Cart />
               </IconButton>
