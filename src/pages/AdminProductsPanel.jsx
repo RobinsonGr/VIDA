@@ -1,8 +1,8 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, Typography, Box, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getCategoriesAPI, getProductsbyCategoryId } from '../api';
-import EditProduct from '../components/productedit/EditProduct';
-import AddProduct from '../components/productedit/AddProduct';
+import EditProduct from '../components/productEdit/EditProduct';
+import AddProduct from '../components/productEdit/AddProduct';
 
 function AdminProductsPanel () {
 

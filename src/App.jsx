@@ -15,6 +15,8 @@ import AdminProductsPanel from './pages/AdminProductsPanel';
 import Home from './pages/Home';
 import Payment from './pages/Payment';
 import Product from './pages/Product';
+import CategoryPanel from './pages/CategoryPanel';
+
 
 function App() {
   const dispatch = useDispatch()
@@ -35,6 +37,7 @@ function App() {
             <Route path='/category/:category' element={<Products />} />
             <Route path='/product/:id/:productname' element={<Product />} />
             <Route path='/editproducts' element={<AdminProductsPanel />} /> 
+            <Route path='/editcategories' element={<CategoryPanel />} /> 
             <Route path='/payment' element={<Payment/>} /> 
             <Route path='/signup' element={!isAuth ? (
               <RegistrationForm />

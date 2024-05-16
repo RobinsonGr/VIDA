@@ -15,24 +15,6 @@ function getProduct(productId) {
 };
 
 
-function getCategoriesAPI () {
-    return fetch(`${URL}/categories`)
-        .then(response => response.json())
-        .then(data => data)
-    };
-
-function getProducts(categoryURL) {
-    //Retrieveing the product list by category
-   return fetch(`${URL}/products/${categoryURL}`)
-
-    //Parsing the response as JSON
-        .then((response) => response.json())
-        //resolving the promise with the retrieved data
-        .then((data) => {
-            return data
-        })
-};
-
 function addProduct(newProduct) {
     console.log(JSON.stringify(newProduct))
 
@@ -164,6 +146,72 @@ function logOutAPI() {
     });
 };
 
+function getCategoriesAPI () {
+    return fetch(`${URL}/categories`)
+        .then(response => response.json())
+        .then(data => data)
+    };
+
+function getProducts(categoryURL) {
+    //Retrieveing the product list by category
+   return fetch(`${URL}/products/${categoryURL}`)
+
+    //Parsing the response as JSON
+        .then((response) => response.json())
+        //resolving the promise with the retrieved data
+        .then((data) => {
+            return data
+        })
+};
+
+
+//Getting directly the response without the need to use .then
+async function addCategory(name) {
+    try {
+        const response = await fetch(`${URL}/categories`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name })
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error adding category:', error);
+        throw error;
+    }
+}
+
+async function editCategory(id, name) {
+    try {
+        const response = await fetch(`${URL}/categories/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name })
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error editing category:', error);
+        throw error;
+    }
+}
+
+async function deleteCategory(id) {
+    try {
+        const response = await fetch(`${URL}/categories/${id}`, {
+            method: 'DELETE'
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error deleting category:', error);
+        throw error;
+    }
+}
 
 
 export {
@@ -177,5 +225,10 @@ export {
     getProductsbyCategoryId,
     editedProductAPI,
     logOutAPI,
-    addProduct
+    addProduct,
+    addCategory,
+    editCategory,
+    deleteCategory,
 };
+
+

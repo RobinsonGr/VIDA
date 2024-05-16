@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AppBar, ListItemText, Toolbar, IconButton, Menu, MenuList, MenuItem, Paper, Button, Box, useMediaQuery, Grid, useTheme} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
 import Cart from '../components/cart/Cart';
 import ProfileMenu from '../components/profileMenu';
 import { useSelector } from 'react-redux';
