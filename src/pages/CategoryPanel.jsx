@@ -4,6 +4,8 @@ import { Button, Box, TextField, Dialog, DialogTitle, DialogContent, DialogActio
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useTheme } from '@emotion/react';
+import slugify from '../utils';
+import EditPanelButtons from '../components/EditPanelsButtons';
 
 
 const CategoryPanel = () => {
@@ -32,7 +34,7 @@ const CategoryPanel = () => {
 
   const handleAddCategory = async () => {
     try {
-      const newCat = await addCategory(newCategory);
+      const newCat = await addCategory(newCategory, slugify(newCategory));
       setCategories([...categories, newCat]);
       setNewCategory('');
     } catch (error) {
@@ -40,11 +42,12 @@ const CategoryPanel = () => {
     }
   };
 
+
   const handleEditCategory = async () => {
     if (!editCategoryId) return;
 
     try {
-      const editedCat = await editCategory(editCategoryId, editCategoryName);
+      const editedCat = await editCategory(editCategoryId, editCategoryName, slugify(editCategoryName));
       setCategories(categories.map(cat => (cat.id === editedCat.id ? editedCat : cat)));
       setEditCategoryId(null);
       setEditCategoryName('');
@@ -77,6 +80,8 @@ const CategoryPanel = () => {
   };
 
   return (
+    <> 
+    <EditPanelButtons/>
     <Box sx={{ 
       display: 'flex', 
       flexDirection: 'column', 
@@ -88,6 +93,7 @@ const CategoryPanel = () => {
       borderRadius: '5px',
       boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
     }}>
+    
       <Typography 
       sx={{color: theme.palette.primary.main }}
        >Category Management</Typography>
@@ -103,7 +109,7 @@ const CategoryPanel = () => {
       {categories.map((category) => (
         <Box key={category.id}>
           {editCategoryId === category.id ? (
-            <div>
+            <Box>
               <TextField
                 label="Edit Category"
                 value={editCategoryName}
@@ -112,18 +118,20 @@ const CategoryPanel = () => {
               <Button variant="contained" onClick={handleEditCategory}>
                 Save Changes
               </Button>
-            </div>
+            </Box>
           ) : (
             <Typography>
               {category.name}
             </Typography>
           )}
+          <Box display="flex" justifyContent="center">
           <IconButton onClick={() => handleEditClick(category)}>
             <EditIcon />
           </IconButton>
           <IconButton onClick={() => handleOpenDeleteDialog(category.id)}>
           <DeleteIcon sx={{ color: theme.palette.primary.main }}/>
           </IconButton>
+          </Box>
         </Box>
       ))}
       <Dialog open={openDeleteDialog} onClose={() => setOpenDeleteDialog(false)}>
@@ -144,6 +152,7 @@ const CategoryPanel = () => {
         </DialogActions>
       </Dialog>
     </Box>
+    </>
   );
 };
 

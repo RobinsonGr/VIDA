@@ -33,7 +33,9 @@ function Header() {
 > 
           <Grid item xs={1} {...(isTabletOrSmaller ? { order: 2 } : {})} sx={{marginRight:'1rem'}}>
             <Box>
-              <img src={Logo} alt="Logo" style={{ height: '40px' }} />
+              <Link to="/">
+                 <img src={Logo} alt="Logo" style={{ height: '40px' }} />
+              </Link>
             </Box>
           </Grid>
           {/* <Box sx={{ display: 'flex', alignItems: 'center' }}> */}

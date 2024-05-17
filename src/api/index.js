@@ -67,6 +67,20 @@ function getProductsbyCategoryId(categoryId) {
         })
 };
 
+async function deleteProduct(id) {
+    try {
+        const response = await fetch(`${URL}/products/${id}`, {
+            method: 'DELETE'
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error deleting category:', error);
+        throw error;
+    }
+}
+
+
 function registerUser (FormData) {
 
     return fetch(`${URL}/user/register`, {
@@ -166,16 +180,17 @@ function getProducts(categoryURL) {
 
 
 //Getting directly the response without the need to use .then
-async function addCategory(name) {
+async function addCategory(name, url) {
     try {
         const response = await fetch(`${URL}/categories`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name })
+            body: JSON.stringify({ name, url })
         });
         const data = await response.json();
+        console.log(data)
         return data;
     } catch (error) {
         console.error('Error adding category:', error);
@@ -183,14 +198,14 @@ async function addCategory(name) {
     }
 }
 
-async function editCategory(id, name) {
+async function editCategory(id, name, categoryURL) {
     try {
         const response = await fetch(`${URL}/categories/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name })
+            body: JSON.stringify({ name, categoryURL })
         });
         const data = await response.json();
         return data;
@@ -229,6 +244,7 @@ export {
     addCategory,
     editCategory,
     deleteCategory,
+    deleteProduct
 };
 
 

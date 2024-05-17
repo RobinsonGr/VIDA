@@ -25,15 +25,14 @@ const DesktopMenu = ({ categories, isTabletOrSmaller }) => {
                 component={Link}
                 to={`/category/${route.name.replace(/\s+/g, '-').toLowerCase()}`}
                 variant="text"
-                color="inherit"
-                sx={{ fontSize: '0.9rem', textTransform: 'capitalize' }}
+                sx={{ color: 'white', fontSize: '0.9rem', textTransform: 'capitalize' }}
                 >
                     {route.name}
                   </Button>
                 ))
         }
         {!isTabletOrSmaller && categories.length > 4 && (
-            <Button variant="text" color="inherit" onClick={handleOpenMenu}>
+            <Button variant="text" sx={{ color: 'white'}} onClick={handleOpenMenu}>
             More
             </Button>
             
@@ -47,12 +46,11 @@ const DesktopMenu = ({ categories, isTabletOrSmaller }) => {
             slotProps={{ paper: { style: { backgroundColor: theme.palette.primary.main} } }} 
 
           >
-            <ListItemText>CategoryA</ListItemText>
             
             {categories.slice(4).map(route => (
               <MenuItem onClick={handleCloseMenu} key={route.name}>
                 <ListItemText>
-                   <Link to={`/category/${route.name.replace(/\s+/g, '-').toLowerCase()}`}></Link>
+                   <Link style={{ textDecoration: 'none', color: 'white' }} to={`/category/${route.name.replace(/\s+/g, '-').toLowerCase()}`}>{route.name}</Link>
                 </ListItemText>
               </MenuItem>
             ))}

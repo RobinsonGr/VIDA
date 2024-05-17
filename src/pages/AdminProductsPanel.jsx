@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { getCategoriesAPI, getProductsbyCategoryId } from '../api';
 import EditProduct from '../components/productEdit/EditProduct';
 import AddProduct from '../components/productEdit/AddProduct';
+import EditPanelButtons from '../components/EditPanelsButtons';
 
 function AdminProductsPanel () {
 
@@ -66,6 +67,9 @@ function AdminProductsPanel () {
   };
 
   return (
+    <>
+    <EditPanelButtons/>
+ 
     <Box sx={{ 
       display: 'flex', 
       flexDirection: 'column', 
@@ -145,6 +149,7 @@ function AdminProductsPanel () {
         )} 
       </Box>
     </Box>
+    </>
   );
 };
 
