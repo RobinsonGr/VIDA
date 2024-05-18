@@ -19,7 +19,7 @@ function EditProduct({ productData, handleProductEdited }) {
   const initialValues = {
     name: name || "",
     price: price || "",
-    img: img || "",
+    img: (!img || img === 'https://i.ibb.co/9yHWqDq/ECO-empty-image-product.png') ? "" : img,
     description: description || "",
     stock: stock || "",
   };
@@ -37,9 +37,7 @@ function EditProduct({ productData, handleProductEdited }) {
   });
 
   return (
-    <Box
-    
-    >
+    <Box>
       {editedProductState ? (
         <Typography variant="body1">
           The {name} was edited successfully

@@ -1,15 +1,22 @@
-import { Button, FormControl, InputLabel, MenuItem, Select, Typography, Box, TextField } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, Typography, Box, Grid} from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { getCategoriesAPI, getProductsbyCategoryId } from '../api';
+import { getCategoriesAPI, getProductsbyCategoryId, deleteProduct } from '../api';
 import EditProduct from '../components/productEdit/EditProduct';
 import AddProduct from '../components/productEdit/AddProduct';
 import EditPanelButtons from '../components/EditPanelsButtons';
+
 
 function AdminProductsPanel () {
 
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState({});
   const [currentProducts, setCurrentProducts] = useState([]);
+
+
+  const [productAdded, setProductAdded] = useState(false);
+//I placed this in addProducts to show the modal whena prodduct is crreated, but i need it here to uset it  as a dependency to 
+//re render and re fetch the category to show the latest one. is similar a productEdited
+
 
   //This goes inside handleProductEdited, which is passing down to EditProduct,  when the product is edited, this state will change
   //every time the value changes between true and false, it will force to useEffect from retrieveProduct to give the updated products
@@ -37,10 +44,11 @@ function AdminProductsPanel () {
       setCurrentProducts(currentProductsByCategory)
     }
 
-    if(selectedCategory) {
+
+    if(selectedCategory.id) {
       retrieveProducts()
     }    
-  }, [selectedCategory])
+  }, [selectedCategory, productAdded])
 
 //this will be passing down to EditProducts (it will close the form and update the products)
   const handleProductEdited = () => {
@@ -63,6 +71,15 @@ function AdminProductsPanel () {
       setEditingProductId(null); 
     } else {
       setEditingProductId(id);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteProduct(id);
+      setCurrentProducts(currentProducts.filter((product) => product.id !== id));
+    } catch (error) {
+      console.error("Failed to delete product:", error);
     }
   };
 
@@ -100,7 +117,7 @@ function AdminProductsPanel () {
       </FormControl>
 
       {/* Toggle for Edit / Add Product */}
-      <Box sx={{ marginBottom: '20px' }}> 
+      <Box sx={{ display: 'flex', flexWrap: 'wrap' ,justifyContent: 'center', marginBottom: '20px' }}> 
         <Button 
           onClick={() => {setToggleProductOption(false)}}
           variant={toggleProductOption ? 'outlined' : 'contained'}
@@ -118,7 +135,7 @@ function AdminProductsPanel () {
       {/* Products edit/display section */}
       <Box>
         {toggleProductOption ? (
-          <AddProduct />
+          <AddProduct productAdded={productAdded} setProductAdded={setProductAdded} selectedCategory={selectedCategory.id}/>
         ) : (
           <Box sx={
             {
@@ -140,7 +157,7 @@ function AdminProductsPanel () {
                 <Box sx={{ textAlign: 'center'}} key={product.id}>
                   <Typography >{product.name}</Typography>
                   <Button onClick={() => handleEditingProduct(product.id)}>Edit</Button>
-                  <Button>Delete</Button>
+                  <Button onClick={() => handleDelete(product.id)}>Delete</Button>
                 </Box>
               )
             )

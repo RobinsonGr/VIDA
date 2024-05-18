@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import { object, string, number } from "yup";
-import { addProduct, editedProductAPI } from "../../api";
+import { addProduct } from "../../api";
 import { TextField, Button, Typography, Box } from "@mui/material";
 
 const validationSchema = object({
@@ -12,15 +12,15 @@ const validationSchema = object({
   stock: number().required("The stock is required"),
 });
 
-function AddProduct() {
-  const [productAdded, setProductAdded] = useState(false);
+function AddProduct({selectedCategory, setProductAdded, productAdded}) {
 
   const initialValues = {
     name: "",
     price: "",
     img: null,
     description: "",
-    stock: ""
+    stock: "",
+    selectedCategory: selectedCategory
   };
 
   const handleSubmit = async (values, { resetForm }) => {
