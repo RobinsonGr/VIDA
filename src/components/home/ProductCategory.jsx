@@ -19,41 +19,43 @@ const ProductCategory = ({ categoryData }) => {
   }, [id]); // Depend on id directly
 
   const settings = {
-    infinite: true, 
-    speed: 500,  
-    slidesToShow: 5, 
-    slidesToScroll: 5, 
-    responsive: [  
+    infinite: products.length > 4,
+    speed: 500,
+    slidesToShow: products.length >= 4 ? 4 : products.length,
+    slidesToScroll: products.length >= 4 ? 4 : products.length, 
+    cssEase: 'margin 0.5s', 
+    
+    responsive: [
         {
             breakpoint: 1024,
             settings: {
-                slidesToShow: 4,
-                slidesToScroll: 4,
+                slidesToShow: products.length >= 4 ? 4 : products.length,
+                slidesToScroll: products.length >= 4 ? 4 : products.length,
             }
         },
         {
             breakpoint: 700,
             settings: {
-                slidesToShow: 3,
-                slidesToScroll: 3,
+                slidesToShow: products.length >= 3 ? 3 : products.length,
+                slidesToScroll: products.length >= 3 ? 3 : products.length,
             }
         },
         {
             breakpoint: 480,
             settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2,
+                slidesToShow: products.length >= 2 ? 2 : products.length,
+                slidesToScroll: products.length >= 2 ? 2 : products.length,
             }
         }
     ]
-};
+  };
 
 
   return (
     <Box>
       <Slider {...settings}>
         {products.map((product) => (
-          <Box key={product.id}>
+          <Box key={product.id} >
             <ProductCard product={product} />
           </Box>
         ))}

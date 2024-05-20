@@ -1,5 +1,5 @@
 import React, { useState } from 'react'; // Import useState
-import { TextField, Button, Typography } from '@mui/material'; // Import Typography
+import { TextField, Button, Typography, Box } from '@mui/material'; // Import Typography
 import { Field, useFormik } from "formik";
 import { useSelector } from "react-redux";
 import { object, string } from 'yup';
@@ -42,6 +42,13 @@ function UserEdit() {
     });
 
     return (
+        <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center" // Center both vertically and horizontally
+            minHeight="100vh" // Cover the entire viewport height
+        >
         <form onSubmit={formik.handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <TextField
                 name="name"
@@ -94,6 +101,7 @@ function UserEdit() {
                 </Typography>
             )}
         </form>
+        </Box>
     );
 }
 

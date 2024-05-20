@@ -1,4 +1,4 @@
-import { Button, FormControl, InputLabel, MenuItem, Select, Typography, Box, Grid} from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, Typography, Box} from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getCategoriesAPI, getProductsbyCategoryId, deleteProduct } from '../api';
 import EditProduct from '../components/productEdit/EditProduct';
@@ -37,6 +37,7 @@ function AdminProductsPanel () {
     setProductEdited(false)
   }, [productEdited])
 
+ 
   //Every thie a category is selected, the code wrapped by useEffect will be execute and will retrieve the products
   useEffect(() => {
     const retrieveProducts = async() => {
@@ -45,7 +46,7 @@ function AdminProductsPanel () {
     }
 
 
-    if(selectedCategory.id) {
+    if(!selectedCategory || !selectedCategory.id) {
       retrieveProducts()
     }    
   }, [selectedCategory, productAdded])
@@ -82,6 +83,27 @@ function AdminProductsPanel () {
       console.error("Failed to delete product:", error);
     }
   };
+
+  if (!categories || categories.length === 0) {
+    return (
+      <>
+        <EditPanelButtons />
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height="100vh"
+        >
+          <Typography variant="h5" color="textSecondary" align="center">
+            Oops! Looks like you haven't added any categories yet.
+            <br />
+            Please add categories to continue.
+          </Typography>
+        </Box>
+      </>
+    );
+  }
+
 
   return (
     <>

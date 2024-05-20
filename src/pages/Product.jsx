@@ -37,15 +37,18 @@ function Product() {
     retrieveProduct();
   }, []);
 
-  console.log(productData);
 
   return (
     <Box style={{ flexGrow: 1, padding: "16px" }}>
     {productData && (
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
-            <Paper style={{ width: "100%", marginBottom: "16px" }}>
-
+            <Paper style={{ maxHeight: "400px" }}>
+            <img 
+                src={productData.img} 
+                alt={productData.name} 
+                style={{ width: "100%", maxHeight: "400px", objectFit: "contain" }} 
+              />
             </Paper>
           </Grid>
 

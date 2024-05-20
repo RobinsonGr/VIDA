@@ -121,6 +121,9 @@ function submitLoginAPI(userData) {
         body: JSON.stringify(userData)
       })
       .then(responseRaw => {
+        console.log({
+            login: responseRaw
+        })
         return responseRaw.json()
       })
 };
