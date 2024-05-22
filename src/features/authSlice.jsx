@@ -13,6 +13,8 @@ const authSlice = createSlice({
     },
     reducers: {},
     extraReducers: (builder) => {
+        //We're handling async, it is require a different configuration, it needs to fetch the data 
+        //after dispatch to get the data in the reducer, just a middleware for it
         builder.addCase(fetchUserAuth.fulfilled, (state, action) => {
             if(action.payload) {
                 return action.payload

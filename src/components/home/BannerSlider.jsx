@@ -2,6 +2,7 @@ import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { Link } from 'react-router-dom';
 
 const BannerSlider = () => {
   const settings = {
@@ -31,12 +32,21 @@ const BannerSlider = () => {
 
       <div className="banner-container"> 
         <Slider {...settings}>
+          <Link to="/signup"> 
           <div>
-            <img src="https://i.ibb.co/NWg311f/Are-you-a-store-2.png" alt="Banner 1" />
+            <img src="https://i.ibb.co/S0XsMLw/VIDA-OFF-DISCOUNT.png" alt="Register for discount" />
           </div>
+          </Link>
+          <Link to="/editproducts">
           <div>
-            <img src="https://i.ibb.co/NWg311f/Are-you-a-store-2.png" alt="Banner 2" />
+            <img src="https://i.ibb.co/xHRcWS7/Are-you-a-store-VIDA.png" alt="Add your products" />
           </div>
+          </Link>
+          <Link to="/category/solar-panels">
+          <div>
+            <img src="https://i.ibb.co/QPJrbZv/Produce-your-own-energy-and-avoid-bills.png" alt="Solar panels" />
+          </div>
+          </Link>
           {/* Add more banner slides as needed */}
         </Slider>
       </div> 

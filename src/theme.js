@@ -3,16 +3,16 @@ import { createTheme } from "@mui/material";
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#4CAF50',   // Primary green
-      light: '#dff2e3', // Lighter green for accents
+      main: '#4CAF50',   
+      light: '#dff2e3',
     },
     neutral: {
-      main: '#f0f0f0',  // Light background
-      contrast: '#37474F' // Dark text for contrast 
+      main: '#f0f0f0',  
+      contrast: '#37474F' 
     },
     accent: {
-      main: '#FFC107',  // Vibrant yellow
-      dark: '#FF9800'   // Slightly darker yellow
+      main: '#FFC107', 
+      dark: '#FF9800'   
     },
   },
   typography: {
@@ -22,7 +22,6 @@ const theme = createTheme({
       fontWeight: 700,
  
     },
-    // ... other headings (h2, h3, etc.) if you want Oswald for them
     button: {
       fontFamily: ['Merriweather', 'sans-serif'].join(','),
       fontWeight: 700,
@@ -32,6 +31,7 @@ const theme = createTheme({
   components: {
     MuiButton: {
       styleOverrides: {
+        //This only apply with contained btns, where I'm using green as a background 
         contained: { 
           color: 'white' 
         }

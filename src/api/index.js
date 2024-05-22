@@ -126,13 +126,10 @@ function submitLoginAPI(userData) {
         return responseRaw.json();
       })
       .then(data => {
-        if (data && data.message) {
-          throw new Error(data.message);
-        }
         return data;
       })
       .catch(error => {
-        throw error; // Re-throw the error if you want to handle it in the component
+        throw error; 
       });
 };
 
@@ -158,7 +155,6 @@ function logOutAPI() {
         credentials: 'include' 
     })
     .then(responseRaw => {
-        console.log(responseRaw)
         if (!responseRaw.ok) {
             throw new Error('Logout failed');
         }

@@ -8,7 +8,7 @@ import { getCategoriesAPI } from '../api';
 import MobileMenu from '../components/header/MobileMenu';
 import DesktopMenu from '../components/header/DesktopMenu';
 
-const Logo = 'https://i.ibb.co/QPGLK94/ECO.png';
+const Logo = 'https://i.ibb.co/ScJqd4D/VIDA-LOGO-robinsongr.png';
 
 function Header() {
   const [categories, setCategories] = useState([]);
@@ -34,7 +34,7 @@ function Header() {
           <Grid item xs={1} {...(isTabletOrSmaller ? { order: 2 } : {})} sx={{marginRight:'1rem'}}>
             <Box>
               <Link to="/">
-                 <img src={Logo} alt="Logo" style={{ height: '40px' }} />
+                 <img src={Logo} alt="Logo" style={{ height: '55px' }} />
               </Link>
             </Box>
           </Grid>

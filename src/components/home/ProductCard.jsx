@@ -4,14 +4,20 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProductCard({ product }) {
 
+const navigate = useNavigate()
+  const handleGoToProduct = () => {
+    const formattedProductName = product.name.replace(/\s+/g, '-'); 
+    navigate(`/product/${product.id}/${formattedProductName}`);
+  };
 
   
   return (
     <Card sx={{ width: 320, maxWidth: '100%', height: '380px', boxShadow: 'lg', position: 'relative' }}>
-      <CardActionArea>
+      <CardActionArea onClick={handleGoToProduct}>
         <CardMedia
           component="img"
           height="200px"
@@ -37,7 +43,7 @@ export default function ProductCard({ product }) {
       </CardContent>
       </CardActionArea>
       <CardActions sx={{ position: 'absolute', bottom: 0, width: '100%' }}>
-        <Button variant="contained" color="primary" size="large" sx={{color: "#FFFFFF"}}>
+        <Button onClick={handleGoToProduct} variant="contained" color="primary" size="large" sx={{color: "#FFFFFF"}} >
           Watch more
         </Button>
       </CardActions>

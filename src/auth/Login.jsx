@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextField, Button, Typography, Grid, Box } from '@mui/material';
 import { object, string } from 'yup';
 import { Formik, Form, ErrorMessage } from 'formik';
@@ -16,12 +16,18 @@ const initialValues = {
   password: '',
 };
 
+
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const [error, setError] = useState(null)
 
   const submitLogin = async (values) => {
-    await submitLoginAPI(values);
-    dispatch(fetchUserAuth());
+    try{
+      await submitLoginAPI(values);
+      dispatch(fetchUserAuth());
+    } catch(err) {
+      setError(err.message);
+    }
   };
 
   return (
@@ -66,6 +72,12 @@ const LoginForm = () => {
                 />
                 <ErrorMessage name="password" component="div" style={{ color: 'red' }} />
 
+                {error && (
+                  <Typography variant="body2" color="error" sx={{ textAlign: 'center', marginTop: '10px' }}>
+                    {error}
+                  </Typography>
+                )}
+                
                 <Button
                   type="submit"
                   variant="contained"
