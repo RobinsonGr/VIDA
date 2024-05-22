@@ -4,6 +4,7 @@ import { object, string } from 'yup';
 import { registerUser } from '../api'; 
 import { Grid, Box, TextField, Button, Typography } from '@mui/material'; 
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const userSchema = object({
   name: string().required('Name is required'),
@@ -22,23 +23,28 @@ const initialValues = {
 
 const  RegistrationForm = () => {
   const navigate = useNavigate()
+  const [errorMessage, setErrorMessage] = useState('');
+
   
   const handleSubmit =  async (values, {resetForm}) => {
     const formData = new FormData();
     
+  try {
       //obj to formData special obj
-      for(const valueKey in values) {
-          formData.append(valueKey, values[valueKey]);  
-      }
-
-      try{
-          await registerUser(formData)
-          navigate('/login')
-
-      } catch(error) {
-          console.error('Error', error)
+      const formData = new FormData();
+      for (const valueKey in values) {
+        formData.append(valueKey, values[valueKey]);  
       }
       
+      await registerUser(formData);
+      navigate('/login');
+    } catch (error) {
+      if (error.message === 'Email already exists') {
+        setErrorMessage('Email already exists. Please use a different email.');
+      } else {
+        setErrorMessage('An error occurred. Please try again.'); // Generic error message for other errors
+      }
+    }
       //object with iterable protocol to show in the console
       // for (var pair of formData.entries()) {
       //     (pair[0]+ ', ' + pair[1]); 
@@ -119,6 +125,11 @@ const  RegistrationForm = () => {
               helperText={formik.touched.password && formik.errors.password}
             />
   
+            {errorMessage && (
+            <Typography variant="body2" style={{ color: '#d32f2f', marginBottom: '10px' }}>
+              {errorMessage}
+            </Typography>
+          )}
             <Button 
               type="submit" 
               variant="contained" 

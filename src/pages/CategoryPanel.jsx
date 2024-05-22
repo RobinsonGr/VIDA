@@ -41,9 +41,9 @@ const CategoryPanel = () => {
 
     try {
       const newCat = await addCategory(newCategory, slugify(newCategory));
+      window.location.reload();
       setCategories([...categories, newCat]);
       setNewCategory('');
-      window.location.reload();
     } catch (error) {
       console.error('Error adding category:', error);
     }
@@ -54,10 +54,10 @@ const CategoryPanel = () => {
 
     try {
       const editedCat = await editCategory(editCategoryId, editCategoryName, slugify(editCategoryName));
+      window.location.reload();
       setCategories(categories.map(cat => (cat.id === editedCat.id ? editedCat : cat)));
       setEditCategoryId(null);
       setEditCategoryName('');
-      window.location.reload();
     } catch (error) {
       console.error('Error editing category:', error);
     }
@@ -68,10 +68,10 @@ const CategoryPanel = () => {
 
     try {
       await deleteCategory(categoryIdToDelete);
+      window.location.reload();
       setCategories(categories.filter(cat => cat.id !== categoryIdToDelete));
       setOpenDeleteDialog(false);
       setCategoryIdToDelete(null);
-      window.location.reload();
     } catch (error) {
       console.error('Error deleting category:', error);
     }

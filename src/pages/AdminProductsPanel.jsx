@@ -16,8 +16,6 @@ function AdminProductsPanel () {
   const [productAdded, setProductAdded] = useState(false);
 //I placed this in addProducts to show the modal whena prodduct is crreated, but i need it here to uset it  as a dependency to 
 //re render and re fetch the category to show the latest one. is similar a productEdited
-
-
   //This goes inside handleProductEdited, which is passing down to EditProduct,  when the product is edited, this state will change
   //every time the value changes between true and false, it will force to useEffect from retrieveProduct to give the updated products
   const [productEdited, setProductEdited] = useState(false);
@@ -37,16 +35,15 @@ function AdminProductsPanel () {
     setProductEdited(false)
   }, [productEdited])
 
- 
+
   //Every thie a category is selected, the code wrapped by useEffect will be execute and will retrieve the products
   useEffect(() => {
     const retrieveProducts = async() => {
-      const currentProductsByCategory = await getProductsbyCategoryId(selectedCategory.id);
-      setCurrentProducts(currentProductsByCategory)
+     const currentProductsByCategory = await getProductsbyCategoryId(selectedCategory.id);
+     setCurrentProducts(currentProductsByCategory)
     }
-
-
-    if(!selectedCategory || !selectedCategory.id) {
+    
+    if(selectedCategory && selectedCategory.id) {
       retrieveProducts()
     }    
   }, [selectedCategory, productAdded])

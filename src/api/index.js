@@ -81,21 +81,20 @@ async function deleteProduct(id) {
 }
 
 
-function registerUser (FormData) {
-
-    return fetch(`${URL}/user/register`, {
-        method: 'POST',
-       // headers: 'Content-Type': 'multipart/form-data,
-       //this wont send images or complex files, so the brower will set it as  multipart/form ..., instead of
-       //url encoded. In server i got to use multer when a formData is received to parse it.
-        body: FormData
-    })
-    .then(response => response.json())
-    .then(message => {
-        (message)
-        return message
-    })
-};
+async function registerUser(formData) {
+    const response = await fetch(`${URL}/user/register`, {
+      method: 'POST',
+      body: formData
+    });
+  
+    if (!response.ok) {
+      const errorData = await response.json(); 
+      const errorMessage = errorData.message || 'Network response was not ok'; 
+      throw new Error(errorMessage); 
+    }
+  
+    return response.json();
+  }
 
 function getAuthValidation () {
     //a boolean is expected wrapped inside an obj
@@ -110,22 +109,31 @@ function getAuthValidation () {
 };
 
 function submitLoginAPI(userData) {
-   
     return fetch(`${URL}/user/login`, {
         method: 'POST',
         credentials: "include",
         headers: {
-           // Accept: "application/json",
             'Content-Type': 'application/json' 
         },
         body: JSON.stringify(userData)
       })
       .then(responseRaw => {
-        console.log({
-            login: responseRaw
-        })
-        return responseRaw.json()
+        if (!responseRaw.ok) {
+          return responseRaw.json().then(error => {
+            throw new Error(error.message || 'An error occurred');
+          });
+        }
+        return responseRaw.json();
       })
+      .then(data => {
+        if (data && data.message) {
+          throw new Error(data.message);
+        }
+        return data;
+      })
+      .catch(error => {
+        throw error; // Re-throw the error if you want to handle it in the component
+      });
 };
 
 function editUserAPI(dataUpdated) {
