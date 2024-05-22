@@ -18,6 +18,7 @@ const Home = () => {
 
   return (
       <Container maxWidth="xl"> 
+      {/*This is to reset the styles */}
       <CssBaseline /> 
       <EditPanelButtons/>
 

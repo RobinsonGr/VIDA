@@ -14,6 +14,7 @@ const validationSchema = object({
 
 function AddProduct({selectedCategory, setProductAdded, productAdded}) {
 
+  //A predefined img will be set in the backend if none  is set
   const initialValues = {
     name: "",
     price: "",

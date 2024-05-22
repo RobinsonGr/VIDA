@@ -24,6 +24,7 @@ const LoginForm = () => {
   const submitLogin = async (values) => {
     try{
       await submitLoginAPI(values);
+      
       dispatch(fetchUserAuth());
     } catch(err) {
       setError(err.message);

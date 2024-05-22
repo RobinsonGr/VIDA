@@ -5,12 +5,14 @@ import { useState, useEffect } from "react";
 import PaymentForm from "./PaymentForm";
 
 function StripeContainer() {
-
+    // State to hold the Stripe promise and client secret
 const [stripePromise, setStripePromise] = useState(null);
 const [clientSecret, setClientSecret] = useState("");
 
+    // Base URL for API requests
 const baseURL = import.meta.env.VITE_REACT_APP_BASE_URL
 
+    // Fetch Stripe configuration on component mount
 useEffect(() => {
 
     const fetchData = async () => {
@@ -26,6 +28,7 @@ useEffect(() => {
     fetchData()
 }, []);
 
+    // Fetch payment intent client secret
 useEffect(() => {
  const fetchData = async () => {
         try {
@@ -43,14 +46,10 @@ fetchData();
          
     }, []);
 
-    console.log({
-        clientSecret: clientSecret,
-        publishableKey: stripePromise,
-    })
     
-
-return (
-    <>
+    return (
+        <>
+        {/*Render payment form once client secret and stripe promise are available*/}
         {clientSecret && stripePromise && (
             <Elements stripe={stripePromise} options={{clientSecret}}>
                 <PaymentForm/>
