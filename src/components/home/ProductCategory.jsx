@@ -5,6 +5,7 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductCard from './ProductCard';
+import SliderArrow from './SliderArrow';
 
 const ProductCategory = ({ categoryData }) => {
   const { id, name } = categoryData;
@@ -24,6 +25,8 @@ const ProductCategory = ({ categoryData }) => {
     slidesToShow: products.length >= 4 ? 4 : products.length,
     slidesToScroll: products.length >= 4 ? 4 : products.length, 
     cssEase: 'margin 0.5s', 
+    nextArrow: <SliderArrow to="prev"/>,
+    prevArrow: <SliderArrow to="next"/>,
     
     responsive: [
         {

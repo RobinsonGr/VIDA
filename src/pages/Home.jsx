@@ -24,7 +24,7 @@ const Home = () => {
 
         <BannerSlider  />
 
-        <Container sx={{marginTop: '1.5rem'}}>
+        <Container maxWidth="xl" sx={{marginTop: '1.5rem'}}>
         {categoryList.length > 0 ? (
           categoryList.map(({ id, name }) => (
             <Box key={id} mb={8}> 

@@ -3,6 +3,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Link } from 'react-router-dom';
+import SliderArrow from './SliderArrow';
 
 const BannerSlider = () => {
   const settings = {
@@ -12,6 +13,8 @@ const BannerSlider = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
+    nextArrow: <SliderArrow to="prev"/>,
+    prevArrow: <SliderArrow to="next"/>
   };
 
   return (
