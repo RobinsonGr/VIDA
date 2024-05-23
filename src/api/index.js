@@ -1,4 +1,4 @@
-const URL = 'http://localhost:3000'
+const URL = import.meta.env.VITE_REACT_APP_BASE_URL
 
 
 
