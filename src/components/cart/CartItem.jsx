@@ -13,7 +13,7 @@ function CartItem({ userData }) {
   };
 
   return (
-    <Card sx={{ position: 'relative', maxWidth: '100%', marginBottom: '15px' }}> 
+    <Card sx={{ position: 'relative', paddingX: '0.5rem', maxWidth: '100%', marginBottom: '15px' }}> 
       <Grid container spacing={0}>
         <Grid item xs={4}>
           <CardMedia

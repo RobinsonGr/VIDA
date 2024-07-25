@@ -103,7 +103,9 @@ function getAuthValidation () {
     })
     .then(response => response.json())
     .then(data => {
-    console.log(data)
+    console.log({
+        getAuth: data
+    })
       return data
     })
 };
@@ -126,6 +128,7 @@ function submitLoginAPI(userData) {
         return responseRaw.json();
       })
       .then(data => {
+        console.log(data)
         return data;
       })
       .catch(error => {

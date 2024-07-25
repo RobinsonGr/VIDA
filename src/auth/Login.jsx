@@ -22,11 +22,13 @@ const LoginForm = () => {
   const [error, setError] = useState(null)
 
   const submitLogin = async (values) => {
+    console.log('button was hit')
     try{
       await submitLoginAPI(values);
       
       dispatch(fetchUserAuth());
     } catch(err) {
+      console.log('login component', err)
       setError(err.message);
     }
   };

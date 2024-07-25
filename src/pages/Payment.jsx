@@ -14,7 +14,7 @@ function Payment() {
   };
 
   return (
-    <Box display="flex" justifyContent="center" gap={10} p={2}>
+    <Box display="flex" justifyContent="center" gap={8} p={2} flexDirection={{ xs: 'column', sm: 'row' }}>
       {cartItems.length === 0 ? (
         <Box textAlign="center">
           <Typography variant="h6">Your cart is empty :(</Typography>

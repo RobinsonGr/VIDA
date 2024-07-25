@@ -33,7 +33,7 @@ function Item({ itemData }) {
   
 
   return (
-    <Card sx={{ width: '100%', height: '400px', boxShadow: 'lg', position: 'relative' }}>
+    <Card sx={{ width: '100%', maxWidth: '370px', height: '400px', boxShadow: 'lg', position: 'relative' }}>
       <CardActionArea onClick={handleGoToProduct}>
         <CardMedia
           component="img"
